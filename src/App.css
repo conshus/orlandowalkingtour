@@ -22,3 +22,31 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.flex {
+  display: flex;
+}
+.flexcolumn{
+  flex-direction: column;
+}
+.wrap{
+  flex-wrap: wrap;
+}
+.vcenter {
+  align-items: center;
+}
+.hcenter {
+ justify-content: center;
+}
+.space_between{
+ justify-content: space-between;
+ width:100%
+}
+.space_around{
+ justify-content: space-around;
+ flex-wrap: wrap;
+}
+.wholeScreen{
+  width:100vw;
+  height:100vh;
+}
