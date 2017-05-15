@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import base from './rebase';
 window.base = base; //Use base from console
+//import { collapsible } from 'materialize-css';
+import materializecss from 'materialize-css';
+import $ from 'jquery'
 
 class Tours extends Component {
   componentDidMount(){
