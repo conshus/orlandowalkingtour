@@ -11,6 +11,37 @@ class Home extends Component {
     }
   }
 
+
+  componentDidMount() {
+    base.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log('User is signed in.', user);
+        this.setState({
+          user: user
+        })
+      //   base.syncState(`/users/${user.uid}/projects`,{
+      //     context: this,
+      //     state: 'projects',
+      //     asArray: true
+      //   })
+      //   base.syncState(`/users/${user.uid}/users`,{
+      //     context: this,
+      //     state: 'users',
+      //     asArray: true
+      //   })
+      // } else {
+      //   console.log('User is logged out.')
+      //   this.setState({
+      //     user: {}
+      //   })
+       }
+    });
+
+  }
+
+
+
+
   googlelogin (){
     var authHandler = (error, data) => {
       console.log('user', data.user)
@@ -79,14 +110,17 @@ class Home extends Component {
     }
   }
 
-
-  welcome () {
-    if (base.auth().currentUser){
-      return (<button
-        onClick={this.logout.bind(this)}>Logout</button>
+  loggedInUserMenu (){
+    if (this.state.user.uid){
+      return (
+        <div>
+          <h6>user menu here</h6>
+          <img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" />
+          <br/>{this.state.user.displayName}
+          <br/><Link className="waves-effect waves-light btn" to="/tours">Create New Tour</Link>
+          <br/><Link className="waves-effect waves-light btn" to="/tours">View Saved Tours</Link>
+        </div>
       )
-    } else {
-      return <button>Login</button>
     }
   }
 
@@ -97,6 +131,7 @@ class Home extends Component {
         <div>
           <h1>Home works!</h1>
           <Link className="waves-effect waves-light btn" to="/tours">Take a Tour</Link>
+          {this.loggedInUserMenu()}
           {this.loginOrLogoutButtons()}
         </div>
       </div>
