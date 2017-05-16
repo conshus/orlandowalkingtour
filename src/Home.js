@@ -117,8 +117,9 @@ class Home extends Component {
           <h6>user menu here</h6>
           <img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" />
           <br/>{this.state.user.displayName}
-          <br/><Link className="waves-effect waves-light btn" to="/tours">Create New Tour</Link>
-          <br/><Link className="waves-effect waves-light btn" to="/tours">View Saved Tours</Link>
+          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link>
+          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link>
+          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/submit`}>Suggest a Location</Link>
         </div>
       )
     }

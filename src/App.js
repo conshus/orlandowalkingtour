@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Home from './Home';
 import Tours from './Tours';
+import CreateTour from './CreateTour';
+import Tour from './Tour';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -17,6 +19,8 @@ class App extends Component {
           <div>
             <Route exact path="/" component={Home}/>
             <Route path="/tours" component={Tours}/>
+            <Route path="/user/:uid/create" component={CreateTour}/>
+            <Route path="/tour/:id" component={Tour}/>
           </div>
         </Router>
 
