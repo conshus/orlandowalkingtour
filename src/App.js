@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Home from './Home';
-import Tours from './Tours';
-import CreateTour from './CreateTour';
-import Tour from './Tour';
+import Home from './components/Home';
+import Tours from './components/Tours';
+import CreateTour from './components/CreateTour';
+import Tour from './components/Tour';
 import logo from './logo.svg';
 import './App.css';
 import {
