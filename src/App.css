@@ -53,3 +53,6 @@
 .userAvatar{
   width:10vw;
 }
+#sidenav-overlay {
+  z-index: 996 !important;
+}
