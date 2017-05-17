@@ -42,27 +42,23 @@ componentDidMount() {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       },
-      content: '<a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a>'+'<img width=20 src='+this.state.user.photoURL+'><b>Location</b> found using HTML5.',
+      content: 'Location found using HTML5.',
     });
 
     //raf(tick);
-  }, (reason) => {
-    // if (this.isUnmounted) {
-    //   return;
-    // }
-    this.setState({
-      center: {
-        lat: 60,
-        lng: 105,
-      },
-      content: `Error: The Geolocation service failed (${reason}).`,
+    }, (reason) => {
+      // if (this.isUnmounted) {
+      //   return;
+      // }
+      this.setState({
+        center: {
+          lat: 60,
+          lng: 105,
+        },
+        content: `Error: The Geolocation service failed (${reason}).`,
+      });
     });
-  });
-}
-
-
-
+  }
 
   render(){
     const markers = this.props.markers || []

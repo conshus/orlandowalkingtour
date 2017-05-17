@@ -11,8 +11,8 @@ class CreateTour extends Component {
         <div className="row">
           <div className="col s12 m6" style={{padding:0}}>
             <Map
-              containerElement={<div style={{height:50+'vh'}} />}
-              mapElement={<div style={{height:50+'vh'}} />}
+              containerElement={<div id='containerElement' />}
+              mapElement={<div id='mapElement' />}
             />
           </div>
           <div className="col s12 m6"><Locations /></div>
