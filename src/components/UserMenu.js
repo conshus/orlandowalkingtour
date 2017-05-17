@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import materializecss from 'materialize-css';
 //import $ from 'jquery';
 var $ = window.jQuery = require('jquery');
@@ -18,13 +19,13 @@ class UserMenu extends Component {
               <a href="#!" className="brand-logo">Logo</a>
               <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
               <ul className="right hide-on-med-and-down">
-                <li><a href="sass.html">Sass</a></li>
+                <li><Link to="/">Home</Link></li>
                 <li><a href="badges.html">Components</a></li>
                 <li><a href="collapsible.html">Javascript</a></li>
                 <li><a href="mobile.html">Mobile</a></li>
               </ul>
               <ul className="side-nav" id="mobile-demo">
-                <li><a href="sass.html">Sass</a></li>
+                <li><Link to="/">Home</Link></li>
                 <li><a href="badges.html">Components</a></li>
                 <li><a href="collapsible.html">Javascript</a></li>
                 <li><a href="mobile.html">Mobile</a></li>
