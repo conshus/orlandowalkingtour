@@ -13,11 +13,13 @@ class Locations extends Component {
       <div>
         <div id="allLocations" className="col s12">
           <ul className="collection">
-            {this.props.locations.map((location, index) => {
-              return(
-                <li className="collection-item" key={index}><div>{location.name}<a href="#" className="secondary-content"><i className="material-icons">send</i></a></div></li>
-              )
-            })}
+            <form action="#">
+              {this.props.locations.map((location, index) => {
+                return(
+                  <li className="collection-item" key={index}><div><input className="left" type="checkbox" id={location.key} /><label htmlFor={location.key}>{location.name}</label><a href="#" className="secondary-content"><i className="material-icons">send</i></a></div></li>
+                )
+              })}
+            </form>
           </ul>
         </div>
       </div>
