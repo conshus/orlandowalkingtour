@@ -42,7 +42,8 @@ componentDidMount() {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       },
-      content: '<img src='+this.state.user.photoURL+'>Location found using HTML5.',
+      content: '<a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+            'https://en.wikipedia.org/w/index.php?title=Uluru</a>'+'<img width=20 src='+this.state.user.photoURL+'><b>Location</b> found using HTML5.',
     });
 
     //raf(tick);
@@ -74,7 +75,8 @@ componentDidMount() {
         center={this.state.center}>
         {this.state.center && (
         <InfoWindow position={this.state.center}>
-          <div>{this.state.content}</div>
+          {/* <div><b>test</b>{this.state.content}</div> */}
+          <img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" />
         </InfoWindow>
         )}
         {markers.map((marker,index) => (
