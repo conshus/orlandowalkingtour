@@ -57,14 +57,23 @@
   z-index: 996 !important;
 }
 
+#allLocations{
+  overflow-y: auto;
+}
 
 @media only screen and (min-width: 0){
   #containerElement, #mapElement {
+    height: 40vh;
+  }
+  #allLocations {
     height: 40vh;
   }
 }
 @media only screen and (min-width: 601px){
   #containerElement, #mapElement {
     height: 90vh;
+  }
+  #allLocations {
+    height: 85vh;
   }
 }
