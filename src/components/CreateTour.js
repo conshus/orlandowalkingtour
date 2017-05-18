@@ -18,14 +18,30 @@ class CreateTour extends Component {
   componentDidMount() {
     base.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('User is signed in.', user);
+        // console.log('User is signed in.', user);
         this.setState({
           user: user
         })
-        base.syncState(`/historic-locations/orlando`,{
+        // base.syncState(`/historic-locations/orlando`,{
+        //   context: this,
+        //   state: 'locations',
+        //   asArray: true
+        // })
+        base.fetch(`/historic-locations/orlando`,{
           context: this,
-          state: 'locations',
-          asArray: true
+          asArray: true,
+          then(locations){
+            // console.log(locations);
+            let allLocations=locations.map((location,index) => {
+              return(
+                {...location, selected: false}
+              )
+            })
+            // console.log(allLocations);
+            this.setState({
+              locations: allLocations
+            })
+          }
         })
         base.syncState(`/users/${user.uid}/tours`,{
           context: this,
@@ -42,9 +58,21 @@ class CreateTour extends Component {
 
   }
 
+  toggleLocation(toggledLocation){
+    console.log('toggleLocation', toggledLocation)
+    let newLocationsArray = this.state.locations.map(function(location, index) {
+      if (location === toggledLocation){
+        location.selected = !toggledLocation.selected;
+      }
+      return(location);
+    })
+    this.setState({
+      locations: newLocationsArray
+    })
+  }
 
   render() {
-    {console.log(this.state.locations)}
+    // {console.log(this.state.locations)}
 
     return (
       <div className="CreateTour">
@@ -56,7 +84,12 @@ class CreateTour extends Component {
               mapElement={<div id='mapElement' />}
             />
           </div>
-          <div className="col s12 m6"><Locations locations={this.state.locations} /></div>
+          <div className="col s12 m6">
+            <Locations
+              locations={this.state.locations}
+              sendLocationToggleToCreateTour={this.toggleLocation.bind(this)}
+            />
+          </div>
         </div>
       </div>
     )

@@ -57,7 +57,7 @@
   z-index: 996 !important;
 }
 
-#allLocations{
+#allLocations, #selectedLocations{
   overflow-y: auto;
 }
 
@@ -65,7 +65,7 @@
   #containerElement, #mapElement {
     height: 40vh;
   }
-  #allLocations {
+  #allLocations, #selectedLocations {
     height: 40vh;
   }
 }
@@ -73,7 +73,7 @@
   #containerElement, #mapElement {
     height: 88vh;
   }
-  #allLocations {
+  #allLocations, #selectedLocations {
     height: 80vh;
   }
 }

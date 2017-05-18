@@ -25,7 +25,7 @@ componentDidMount() {
 
   base.auth().onAuthStateChanged(user => {
     if (user) {
-      console.log('User is signed in.', user);
+      // console.log('User is signed in.', user);
       this.setState({
         user: user
       })
@@ -62,8 +62,8 @@ componentDidMount() {
 
   render(){
     const markers = this.props.markers || []
-    console.log(markers)
-    {console.log(this.state.center)}
+    // console.log(markers)
+    // {console.log(this.state.center)}
     return (
       <GoogleMap
         defaultZoom={14}
