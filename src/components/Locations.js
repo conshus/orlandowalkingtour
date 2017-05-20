@@ -6,6 +6,65 @@ window.Vel = require('materialize-css/js/velocity.min'); //needed this to make t
 import base from '../rebase';
 window.base = base; //Use base from console
 
+import { render } from 'react-dom';
+import {
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
+  arrayMove,
+} from 'react-sortable-hoc';
+
+const DragHandle = SortableHandle(() => <span><i className="material-icons">reorder</i></span>);
+
+const SortableItem = SortableElement(({value}) => {
+  return (
+    <li>
+      <DragHandle />
+      {value}
+    </li>
+  );
+});
+
+const SortableList = SortableContainer(({items}) => {
+  return (
+    //<ul>
+    <span>
+      {items.map((value, index) => (
+        <SortableItem key={`item-${index}`} index={index} value={value.name} />
+      ))}
+    </span>
+    //</ul>
+  );
+});
+
+
+class SortableComponent extends Component {
+  // state = {
+  //   items: ['Item 1a', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
+  // };
+  // handleSendingBackTourLocations(){
+  //   console.log('handleSendingBackTourLocations',event)
+  //   this.props.sendBackTourLocations();
+  //
+  // }
+  // onSortEnd = ({oldIndex, newIndex}) => {
+  //   let {items} = this.state;
+  //
+  //   this.setState({
+  //     items: arrayMove(items, oldIndex, newIndex),
+  //   });
+  // };
+  render() {
+//     let {items} = this.state;
+// console.log(this.state.items);
+console.log(this.props.tourLocations);
+    // return <SortableList items={this.props.tourLocations} onSortEnd={this.onSortEnd} useDragHandle={true} />;
+    return <SortableList items={this.props.tourLocations} onSortEnd={this.props.sendBackTourLocations} useDragHandle={true} />;
+  }
+}
+
+
+
 class Locations extends Component {
 
   constructor (){
@@ -30,6 +89,15 @@ class Locations extends Component {
        }
     });
   }
+
+
+  onSortEnd = ({oldIndex, newIndex}) => {
+    //let {items} = this.state;
+
+    this.setState({
+      tourLocations: arrayMove(this.state.tourLocations, oldIndex, newIndex),
+    });
+  };
 
 
   saveTour(){
@@ -111,6 +179,17 @@ class Locations extends Component {
           <button className="waves-effect waves-light btn"
             onClick={this.saveTour.bind(this)}>Save</button>
           <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
+
+          <ul className="collection">
+            <form action="#">
+
+              <SortableComponent
+                tourLocations={this.state.tourLocations}
+                sendBackTourLocations={this.onSortEnd.bind(this)}
+              />
+            </form>
+          </ul>
+
           <ul className="collection">
             <form action="#">
               {this.state.tourLocations.map((location, index) => {
@@ -137,8 +216,8 @@ class Locations extends Component {
     )
   }
   render() {
-    console.log(this.props.locations)
-    console.log(this.state.tourLocations)
+    // console.log(this.props.locations)
+    // console.log(this.state.tourLocations)
 
     return (
       <div className="Locations">
@@ -175,4 +254,5 @@ class Locations extends Component {
   }
 }
 
+// render(<SortableComponent />, document.getElementById('root'));
 export default Locations;

@@ -8,7 +8,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-google-maps": "^6.3.0",
-    "react-router-dom": "^4.1.1"
+    "react-router-dom": "^4.1.1",
+    "react-sortable-hoc": "^0.6.3"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
