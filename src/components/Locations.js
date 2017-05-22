@@ -89,6 +89,9 @@ class Locations extends Component {
     super();
     this.state = {
       tourLocations:[],
+      initialSave: false,
+      tourId:'',
+      disableSave: false
     }
   }
 
@@ -114,6 +117,7 @@ class Locations extends Component {
 
     this.setState({
       tourLocations: arrayMove(this.state.tourLocations, oldIndex, newIndex),
+      disableSave: false,
     });
   };
 
@@ -123,14 +127,32 @@ class Locations extends Component {
     console.log(tourName)
     let tourLocationIdsOnly = this.state.tourLocations.map((location,index)=>location.key);
     console.log(tourLocationIdsOnly)
-    base.push(`/tours/`,
-    { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
-    // .then(results => {
-    //   base.push(`/tours/${results.key}/sites`,
-    //   {data: this.state.tourLocations})
-
-    // }
-  //)
+    if (this.state.tourId === '' && this.state.initialSave === false){
+      base.push(`/tours/`,
+      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
+      .then(results => {
+        console.log(results.key)
+        console.log(this.state.initialSave)
+        this.setState({
+          initialSave: true,
+          tourId: results.key,
+          disableSave: true,
+        })
+        console.log(this.state)
+      })
+    } else {
+      console.log('already in Firebase', this.state.tourId)
+      base.post(`/tours/${this.state.tourId}/`,
+      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
+      //.then(results => {
+        //console.log(results.key)
+        console.log(this.state.initialSave)
+        this.setState({
+          disableSave: true,
+        })
+        console.log(this.state)
+      //})
+    }
 
   }
 
@@ -154,7 +176,8 @@ class Locations extends Component {
       newTourLocationsArray = this.state.tourLocations.concat(locationToggled)
     }
     this.setState({
-      tourLocations: newTourLocationsArray
+      tourLocations: newTourLocationsArray,
+      disableSave: false,
     })
   }
 
@@ -195,7 +218,7 @@ class Locations extends Component {
           <label htmlFor="tourName">Enter a name for your tour</label>
         </div>
           <button className="waves-effect waves-light btn"
-            onClick={this.saveTour.bind(this)}>Save</button>
+            onClick={this.saveTour.bind(this)} disabled={this.state.disableSave ? 'disabled' : ''}>Save</button>
           <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
 
           <ul className="collection">
