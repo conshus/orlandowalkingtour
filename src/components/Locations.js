@@ -18,15 +18,28 @@ const DragHandle = SortableHandle(() => <span><i className="material-icons">reor
 
 const SortableItem = SortableElement(({value, toggleSelect}) => {
   return (
-    <li onClick={toggleSelect.bind(this,value)}>
-      <DragHandle />
-      {value.name}
+    <li  className="collection-item">
+      <span className="left"><DragHandle /></span>
+      {/* <input className="left" type="checkbox" id={'selected-'+value.key} checked="checked" />
+      <label htmlFor={'selected-'+value.key}> */}
+        <span className="center-align">{value.name}</span>
+      {/* </label> */}
+      {/* <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
+        <i className="material-icons">
+          info_outline
+        </i>
+      </a> */}
+      <a onClick={toggleSelect.bind(this,value)} className="secondary-content">
+        <i className="material-icons">
+          clear
+        </i>
+      </a>
+
     </li>
   );
 });
 
 const SortableList = SortableContainer(({items, toggleSelect}) => {
-  console.log(toggleSelect)
   return (
     //<ul>
     <span>
@@ -129,7 +142,7 @@ class Locations extends Component {
     let locationBeingChecked = this.state.tourLocations.find(function(location){
       return location.key === locationToggled.key
     })
-    console.log(locationBeingChecked)
+    // console.log(locationBeingChecked)
     if (locationBeingChecked){
       console.log('already in list, needs to be removed')
       newTourLocationsArray = this.state.tourLocations.filter(function(location, index){
@@ -196,7 +209,7 @@ class Locations extends Component {
             </form>
           </ul>
 
-          <ul className="collection">
+          {/* <ul className="collection">
             <form action="#">
               {this.state.tourLocations.map((location, index) => {
                 return(
@@ -216,7 +229,9 @@ class Locations extends Component {
                 )
               })}
             </form>
-          </ul>
+          </ul> */}
+
+
         </div>
       </div>
     )
