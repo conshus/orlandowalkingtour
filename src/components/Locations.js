@@ -16,21 +16,22 @@ import {
 
 const DragHandle = SortableHandle(() => <span><i className="material-icons">reorder</i></span>);
 
-const SortableItem = SortableElement(({value}) => {
+const SortableItem = SortableElement(({value, toggleSelect}) => {
   return (
-    <li>
+    <li onClick={toggleSelect.bind(this,value)}>
       <DragHandle />
-      {value}
+      {value.name}
     </li>
   );
 });
 
-const SortableList = SortableContainer(({items}) => {
+const SortableList = SortableContainer(({items, toggleSelect}) => {
+  console.log(toggleSelect)
   return (
     //<ul>
     <span>
       {items.map((value, index) => (
-        <SortableItem key={`item-${index}`} index={index} value={value.name} />
+        <SortableItem key={`item-${index}`} index={index} value={value} toggleSelect={toggleSelect} />
       ))}
     </span>
     //</ul>
@@ -42,11 +43,11 @@ class SortableComponent extends Component {
   // state = {
   //   items: ['Item 1a', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6'],
   // };
-  // handleSendingBackTourLocations(){
-  //   console.log('handleSendingBackTourLocations',event)
-  //   this.props.sendBackTourLocations();
-  //
-  // }
+  sendBackToggleSelect(){
+    console.log('sendBackToggleSelect')
+    //this.props.sendBackTourLocations();
+
+  }
   // onSortEnd = ({oldIndex, newIndex}) => {
   //   let {items} = this.state;
   //
@@ -59,7 +60,11 @@ class SortableComponent extends Component {
 // console.log(this.state.items);
 console.log(this.props.tourLocations);
     // return <SortableList items={this.props.tourLocations} onSortEnd={this.onSortEnd} useDragHandle={true} />;
-    return <SortableList items={this.props.tourLocations} onSortEnd={this.props.sendBackTourLocations} useDragHandle={true} />;
+    return (<SortableList
+      items={this.props.tourLocations}
+      onSortEnd={this.props.sendBackTourLocations}
+      toggleSelect={this.props.toggleSelect.bind(this)}
+      useDragHandle={true} />)
   }
 }
 
@@ -186,6 +191,7 @@ class Locations extends Component {
               <SortableComponent
                 tourLocations={this.state.tourLocations}
                 sendBackTourLocations={this.onSortEnd.bind(this)}
+                toggleSelect={this.toggleSelect.bind(this)}
               />
             </form>
           </ul>
