@@ -77,3 +77,6 @@
     height: 80vh;
   }
 }
+.noBottom{
+  margin-bottom: 0 !important;
+}

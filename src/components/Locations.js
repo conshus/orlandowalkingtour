@@ -213,14 +213,19 @@ class Locations extends Component {
     return(
       <div>
         <div id="selectedLocations" className="col s12">
-          <div className="input-field">
-          <input id="tourName" type="text" className="validate"  ref={(input) => { this.tourName = input; }} />
-          <label htmlFor="tourName">Enter a name for your tour</label>
-        </div>
+
+<div className="row noBottom">
+          <div className="input-field col s6">
+            <input id="tourName" type="text" className="validate noBottom"  ref={(input) => { this.tourName = input; }} />
+            <label htmlFor="tourName">Enter a name for your tour</label>
+          </div>
+          <div className="col s6 valign-wrapper">
           <button className="waves-effect waves-light btn"
             onClick={this.saveTour.bind(this)} disabled={this.state.disableSave ? 'disabled' : ''}>Save</button>
           <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
+        </div>
 
+</div>
           <ul className="collection">
             <form action="#">
 
@@ -231,29 +236,6 @@ class Locations extends Component {
               />
             </form>
           </ul>
-
-          {/* <ul className="collection">
-            <form action="#">
-              {this.state.tourLocations.map((location, index) => {
-                return(
-                  <li className="collection-item" key={location.key}>
-                    <div>
-                      <input className="left" type="checkbox" id={'selected-'+location.key} checked="checked" />
-                      <label onClick={this.toggleSelect.bind(this,location)} htmlFor={'selected-'+location.key}>
-                        {location.name}
-                      </label>
-                      <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
-                        <i className="material-icons">
-                          info_outline
-                        </i>
-                      </a>
-                    </div>
-                  </li>
-                )
-              })}
-            </form>
-          </ul> */}
-
 
         </div>
       </div>
