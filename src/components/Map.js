@@ -64,6 +64,16 @@ componentDidMount() {
 
   componentWillReceiveProps(newProps){
     console.log(newProps.locations)
+    // let newMarkers = newProps.locations.map((marker,index) => (
+    //     {position: new.google.maps.LatLng(marker.location.latitude, marker.location.longitude)}
+    // ))
+    this.setState({
+      markers: newProps.locations.map(marker => {
+        //console.log(marker.location)
+        return { position: {lat:marker.location.latitude, lng:marker.location.longitude} }
+      })
+    })
+    console.log(this.state.markers)
   }
 
 
