@@ -111,6 +111,9 @@ componentDidMount() {
       }),
     });
   }
+  handleMarkerClickTest(marker){
+    console.log('handleMarkerClickTest',marker)
+  }
 
   render(){
     const markers = this.state.markers || []
@@ -132,7 +135,7 @@ componentDidMount() {
               key={index}
               position={marker.position}
                //{...marker}
-              onClick={this.handleMarkerClick}
+              onClick={this.handleMarkerClick.bind(this,marker)}
             >
               {marker.showInfo && (
                 <InfoWindow>
