@@ -70,13 +70,47 @@ componentDidMount() {
     this.setState({
       markers: newProps.locations.map(marker => {
         //console.log(marker.location)
-        return { position: {lat:marker.location.latitude, lng:marker.location.longitude} }
+        return {
+          position: {lat:marker.location.latitude, lng:marker.location.longitude},
+          infoContent: marker.name,
+          showInfo: false
+        }
       })
     })
     console.log(this.state.markers)
   }
 
+  handleMarkerClick = this.handleMarkerClick.bind(this);
+  handleMarkerClose = this.handleMarkerClose.bind(this);
 
+  // Toggle to 'true' to show InfoWindow and re-renders component
+  handleMarkerClick(targetMarker) {
+    this.setState({
+      markers: this.state.markers.map(marker => {
+        if (marker === targetMarker) {
+          return {
+            ...marker,
+            showInfo: true,
+          };
+        }
+        return marker;
+      }),
+    });
+  }
+
+  handleMarkerClose(targetMarker) {
+    this.setState({
+      markers: this.state.markers.map(marker => {
+        if (marker === targetMarker) {
+          return {
+            ...marker,
+            showInfo: false,
+          };
+        }
+        return marker;
+      }),
+    });
+  }
 
   render(){
     const markers = this.state.markers || []
@@ -94,7 +128,18 @@ componentDidMount() {
         </InfoWindow>
         )}
         {markers.map((marker,index) => (
-            <Marker {...marker} />
+            <Marker
+              key={index}
+              position={marker.position}
+               //{...marker}
+              onClick={this.handleMarkerClick}
+            >
+              {marker.showInfo && (
+                <InfoWindow>
+                  <div>{marker.infoContent}</div>
+                </InfoWindow>
+              )}
+          </Marker>
           )
         )}
       </GoogleMap>
