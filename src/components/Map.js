@@ -20,7 +20,9 @@ class Map extends Component {
     center: null,
     content: null,
     radius: 6000,
+    markers: []
   };
+
 componentDidMount() {
 
   base.auth().onAuthStateChanged(user => {
@@ -60,8 +62,14 @@ componentDidMount() {
     });
   }
 
+  componentWillReceiveProps(newProps){
+    console.log(newProps.locations)
+  }
+
+
+
   render(){
-    const markers = this.props.markers || []
+    const markers = this.state.markers || []
     // console.log(markers)
     // {console.log(this.state.center)}
     return (

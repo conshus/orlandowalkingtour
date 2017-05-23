@@ -213,22 +213,19 @@ class Locations extends Component {
     return(
       <div>
         <div id="selectedLocations" className="col s12">
-
-<div className="row noBottom">
-          <div className="input-field col s6">
-            <input id="tourName" type="text" className="validate noBottom"  ref={(input) => { this.tourName = input; }} />
-            <label htmlFor="tourName">Enter a name for your tour</label>
+          <div className="row noBottom">
+            <div className="input-field col s6">
+              <input id="tourName" type="text" className="validate noBottom"  ref={(input) => { this.tourName = input; }} />
+              <label htmlFor="tourName">Enter a name for your tour</label>
+            </div>
+            <div className="col s6 valign-wrapper">
+              <button className="waves-effect waves-light btn"
+                onClick={this.saveTour.bind(this)} disabled={this.state.disableSave ? 'disabled' : ''}>Save</button>
+              <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
+            </div>
           </div>
-          <div className="col s6 valign-wrapper">
-          <button className="waves-effect waves-light btn"
-            onClick={this.saveTour.bind(this)} disabled={this.state.disableSave ? 'disabled' : ''}>Save</button>
-          <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
-        </div>
-
-</div>
           <ul className="collection">
             <form action="#">
-
               <SortableComponent
                 tourLocations={this.state.tourLocations}
                 sendBackTourLocations={this.onSortEnd.bind(this)}
@@ -236,7 +233,6 @@ class Locations extends Component {
               />
             </form>
           </ul>
-
         </div>
       </div>
     )

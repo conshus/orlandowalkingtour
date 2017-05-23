@@ -80,6 +80,7 @@ class CreateTour extends Component {
         <div className="row">
           <div className="col s12 m6" style={{padding:0}}>
             <Map
+              locations={this.state.locations}
               containerElement={<div id='containerElement' />}
               mapElement={<div id='mapElement' />}
             />
