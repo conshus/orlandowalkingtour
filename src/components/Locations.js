@@ -190,9 +190,9 @@ class Locations extends Component {
               {this.props.locations.map((location, index) => {
                 return(
                   <li className="collection-item" key={location.key}>
-                    <div>
+                    <div className="left-align">
                       {/* <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  /> */}
-                      <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  checked={location.selected ? 'checked' : ''} />
+                        <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  checked={location.selected ? 'checked' : ''} />
                       <label htmlFor={location.key}>
                         {location.name}
                       </label>
