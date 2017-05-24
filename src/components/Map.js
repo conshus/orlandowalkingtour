@@ -4,6 +4,18 @@ import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, } from 'react-google-maps';
 import base from '../rebase';
 window.base = base; //Use base from console
+import Distance from './Distance'
+
+// var distance = require('google-distance');
+// distance.get(
+//   {
+//     origin: 'San Francisco, CA',
+//     destination: 'San Diego, CA'
+//   },
+//   function(err, data) {
+//     if (err) return console.log(err);
+//     console.log(data);
+// });
 
 const geolocation = (
   canUseDOM && navigator.geolocation ?
@@ -20,7 +32,8 @@ class Map extends Component {
     center: null,
     content: null,
     radius: 6000,
-    markers: []
+    markers: [],
+    travelMode: 'walking'
   };
 
 componentDidMount() {
@@ -63,16 +76,22 @@ componentDidMount() {
   }
 
   componentWillReceiveProps(newProps){
+
+    // var geocoder = new google.maps.Geocoder;
+    //
+    // var service = new google.maps.DistanceMatrixService;
+
     console.log(newProps.locations)
     // let newMarkers = newProps.locations.map((marker,index) => (
     //     {position: new.google.maps.LatLng(marker.location.latitude, marker.location.longitude)}
     // ))
+
     this.setState({
       markers: newProps.locations.map(marker => {
         //console.log(marker.location)
         return {
           position: {lat:marker.location.latitude, lng:marker.location.longitude},
-          infoContent: marker.name,
+          infoContent: (marker.name) ,
           showInfo: false
         }
       })
@@ -111,9 +130,6 @@ componentDidMount() {
       }),
     });
   }
-  handleMarkerClickTest(marker){
-    console.log('handleMarkerClickTest',marker)
-  }
 
   render(){
     const markers = this.state.markers || []
@@ -138,8 +154,12 @@ componentDidMount() {
               onClick={this.handleMarkerClick.bind(this,marker)}
             >
               {marker.showInfo && (
-                <InfoWindow>
-                  <div>{marker.infoContent}</div>
+                <InfoWindow onCloseClick={this.handleMarkerClose.bind(this,marker)}>
+                  <div>
+                    {marker.infoContent}
+                    <br/>
+                    <h6><Distance origin={this.state.center} destination={marker.position} travelMode={this.state.travelMode} showDistance='true' showDuration='true' >Loading</Distance></h6>
+                  </div>
                 </InfoWindow>
               )}
           </Marker>
