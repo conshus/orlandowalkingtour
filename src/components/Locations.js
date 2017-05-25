@@ -324,7 +324,7 @@ getDistance(location){
                     : null}
                     <span className="card-title">{this.state.moreInfoLocation.name}</span>
                   </div>
-                  <div className="card-content">
+                  <div className="card-content modalContent">
                     <p>{this.state.moreInfoLocation.description}</p>
                   </div>
                   <div className="card-action">
