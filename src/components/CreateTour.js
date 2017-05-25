@@ -13,7 +13,8 @@ class CreateTour extends Component {
       user: {},
       locations:[],
       tours:[],
-      allLocations:[]
+      allLocations:[],
+      mapLocations:[]
     }
   }
 
@@ -49,7 +50,8 @@ class CreateTour extends Component {
             // console.log(allLocations);
             this.setState({
               locations: allLocations,
-              allLocations: allLocations
+              allLocations: allLocations,
+              mapLocations: allLocations
             })
           }
         })
@@ -81,10 +83,20 @@ class CreateTour extends Component {
     })
   }
 
-  switchLocationState(newLocations){
-    console.log('switchLocationState',newLocations)
+  switchLocationState(locationsToShow){
+    console.log('switchLocationState',locationsToShow)
+    let newLocationsArray;
+    if (locationsToShow === 'selected'){
+      newLocationsArray = this.state.allLocations.filter(function(location,index){
+        if (location.selected === true){
+          return(location)
+        }
+      })
+    } else {
+      newLocationsArray = this.state.allLocations
+    }
     this.setState({
-      locations: newLocations
+      mapLocations: newLocationsArray
     })
   }
 
@@ -97,7 +109,7 @@ class CreateTour extends Component {
         <div className="row">
           <div className="col s12 m6" style={{padding:0}}>
             <Map
-              locations={this.state.locations}
+              locations={this.state.mapLocations}
               containerElement={<div id='containerElement' />}
               mapElement={<div id='mapElement' />}
             />

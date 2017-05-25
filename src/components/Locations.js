@@ -30,7 +30,7 @@ const SortableItem = SortableElement(({value, toggleSelect}) => {
           info_outline
         </i>
       </a> */}
-      <a onClick={toggleSelect.bind(this,value)} className="secondary-content">
+      <a onClick={toggleSelect.bind(this,value,'selected')} className="secondary-content">
         <i className="material-icons">
           clear
         </i>
@@ -72,7 +72,7 @@ class SortableComponent extends Component {
   render() {
 //     let {items} = this.state;
 // console.log(this.state.items);
-console.log(this.props.tourLocations);
+//console.log(this.props.tourLocations);
     // return <SortableList items={this.props.tourLocations} onSortEnd={this.onSortEnd} useDragHandle={true} />;
     return (<SortableList
       items={this.props.tourLocations}
@@ -92,7 +92,9 @@ class Locations extends Component {
       tourLocations:[],
       initialSave: false,
       tourId:'',
-      disableSave: false
+      disableSave: false,
+      modal: false,
+      moreInfoLocation:{}
     }
   }
 
@@ -158,8 +160,8 @@ class Locations extends Component {
   }
 
 
-  toggleSelect(locationToggled){
-    console.log('location toggleSelect:',locationToggled);
+  toggleSelect(locationToggled,locationsToShow){
+    console.log('location toggleSelect:',locationToggled, locationsToShow);
     this.props.sendLocationToggleToCreateTour(locationToggled);
     let newTourLocationsArray;
     let locationBeingChecked = this.state.tourLocations.find(function(location){
@@ -182,14 +184,24 @@ class Locations extends Component {
       tourLocations: newTourLocationsArray,
       disableSave: false,
     })
-    // this.switchLocationState('selected')
+    //if (locationsToShow === 'selected'){
+       this.switchLocationState(locationsToShow)
+     //}
   }
 
 getDistance(location){
-  console.log('getDistance', location)
+  //console.log('getDistance', location)
   let shortenedLatLng = {lat: location.location.latitude, lng: location.location.longitude}
   return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
 }
+
+  toggleModal(location){
+    console.log('toggleModal', location)
+    this.setState({
+      modal: !this.state.modal,
+      moreInfoLocation: location
+    })
+  }
 
   displayAllLocations(){
     return(
@@ -202,14 +214,14 @@ getDistance(location){
                   <li className="collection-item" key={location.key}>
                     <div className="left-align">
                       {/* <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  /> */}
-                        <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  checked={location.selected ? 'checked' : ''} />
+                        <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location,'all')}  checked={location.selected ? 'checked' : ''} />
                       <label htmlFor={location.key}>
                         {location.name}
                         {this.getDistance(location)}
                       </label>
-                      {/* <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
+                      <a onClick={this.toggleModal.bind(this,location)} data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
                         <i className="material-icons">info_outline</i>
-                      </a> */}
+                      </a>
                     </div>
                   </li>
                 )
@@ -221,6 +233,11 @@ getDistance(location){
     )
   }
   displaySelectedLocations(){
+    // if (!this.state.tourLocations){
+    //   this.setState({
+    //     disableSave: true
+    //   })
+    // }
     return(
       <div>
         <div id="selectedLocations" className="col s12">
@@ -250,11 +267,14 @@ getDistance(location){
   }
   switchLocationState(location){
     console.log("switchLocationState in Location.js", this, location)
-    if (location=='selected'){
-      this.props.switchLocationState(this.state.tourLocations);
-    } else {
-      this.props.switchLocationState(this.props.allLocations);
-    }
+    this.props.switchLocationState(location);
+//    if (location=='selected'){
+      // this.props.switchLocationState(this.state.tourLocations);
+//      this.props.switchLocationState('selected');
+//    } else {
+      //this.props.switchLocationState(this.props.allLocations);
+//      this.props.switchLocationState('all');
+//    }
   }
   render() {
     // console.log(this.props.locations)
@@ -288,6 +308,34 @@ getDistance(location){
           <li><a className="subheader">Subheader</a></li>
           <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
         </ul>
+
+
+        {/* Modal */}
+        {/* {this.displayModal()} */}
+        {this.state.modal ?
+          <div className="modalWindow">
+            <div className="row">
+              <div className="col s12 m2 l3"></div>
+              <div className="col s12 m8 l6">
+                <div className="card">
+                  <div className="card-image">
+                    {this.state.moreInfoLocation.images ?
+                    <img src={this.state.moreInfoLocation.images[0]} />
+                    : null}
+                    <span className="card-title">{this.state.moreInfoLocation.name}</span>
+                  </div>
+                  <div className="card-content">
+                    <p>{this.state.moreInfoLocation.description}</p>
+                  </div>
+                  <div className="card-action">
+                    <span><button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={this.toggleModal.bind(this)}><i className="material-icons">clear</i></button></span>
+                  </div>
+                </div>
+              </div>
+              <div className="col s12 m2 l3"></div>
+            </div>
+          </div>
+          : null}
 
 
       </div>
