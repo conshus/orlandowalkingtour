@@ -5,6 +5,7 @@ var $ = window.jQuery = require('jquery');
 window.Vel = require('materialize-css/js/velocity.min'); //needed this to make the sideNav open. found solution here: https://github.com/Dogfalo/materialize/issues/1229#issuecomment-242328892
 import base from '../rebase';
 window.base = base; //Use base from console
+import Distance from './Distance'
 
 import { render } from 'react-dom';
 import {
@@ -18,11 +19,11 @@ const DragHandle = SortableHandle(() => <span><i className="material-icons">reor
 
 const SortableItem = SortableElement(({value, toggleSelect}) => {
   return (
-    <li  className="collection-item">
-      <span className="left"><DragHandle /></span>
+    <li  className="collection-item left-align">
+      <span className=""><DragHandle /></span>
       {/* <input className="left" type="checkbox" id={'selected-'+value.key} checked="checked" />
       <label htmlFor={'selected-'+value.key}> */}
-        <span className="center-align">{value.name}</span>
+        <span className="">{value.name}</span>
       {/* </label> */}
       {/* <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
         <i className="material-icons">
@@ -172,14 +173,23 @@ class Locations extends Component {
           return(location)
         }
       })
+
     } else {
       newTourLocationsArray = this.state.tourLocations.concat(locationToggled)
+
     }
     this.setState({
       tourLocations: newTourLocationsArray,
       disableSave: false,
     })
+    // this.switchLocationState('selected')
   }
+
+getDistance(location){
+  console.log('getDistance', location)
+  let shortenedLatLng = {lat: location.location.latitude, lng: location.location.longitude}
+  return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
+}
 
   displayAllLocations(){
     return(
@@ -195,10 +205,11 @@ class Locations extends Component {
                         <input className="left" type="checkbox" id={location.key} onClick={this.toggleSelect.bind(this,location)}  checked={location.selected ? 'checked' : ''} />
                       <label htmlFor={location.key}>
                         {location.name}
+                        {this.getDistance(location)}
                       </label>
-                      <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
+                      {/* <a href="#" data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
                         <i className="material-icons">info_outline</i>
-                      </a>
+                      </a> */}
                     </div>
                   </li>
                 )
@@ -237,6 +248,14 @@ class Locations extends Component {
       </div>
     )
   }
+  switchLocationState(location){
+    console.log("switchLocationState in Location.js", this, location)
+    if (location=='selected'){
+      this.props.switchLocationState(this.state.tourLocations);
+    } else {
+      this.props.switchLocationState(this.props.allLocations);
+    }
+  }
   render() {
     // console.log(this.props.locations)
     // console.log(this.state.tourLocations)
@@ -246,8 +265,8 @@ class Locations extends Component {
         <div className="row">
           <div className="col s12">
             <ul className="tabs tabs-fixed-width">
-              <li className="tab col s3"><a className="active" href="#allLocations">All Locations</a></li>
-              <li className="tab col s3"><a href="#selectedLocations">Selected Locations</a></li>
+              <li className="tab col s3"><a className="active" href="#allLocations" onClick={this.switchLocationState.bind(this,'all')}>All Locations</a></li>
+              <li className="tab col s3"><a href="#selectedLocations" onClick={this.switchLocationState.bind(this,'selected')}>Selected Locations</a></li>
             </ul>
           </div>
           {this.displayAllLocations()}

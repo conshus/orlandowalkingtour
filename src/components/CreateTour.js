@@ -4,6 +4,7 @@ import Map from './Map';
 import Locations from './Locations'
 import base from '../rebase';
 window.base = base; //Use base from console
+import Distance from './Distance'
 
 class CreateTour extends Component {
   constructor (){
@@ -11,7 +12,8 @@ class CreateTour extends Component {
     this.state = {
       user: {},
       locations:[],
-      tours:[]
+      tours:[],
+      allLocations:[]
     }
   }
 
@@ -33,13 +35,21 @@ class CreateTour extends Component {
           then(locations){
             // console.log(locations);
             let allLocations=locations.map((location,index) => {
+              //console.log(location)
+              let shortenedLatLng = {lat: location.location.latitude, lng: location.location.longitude}
+              //console.log(shortenedLatLng)
+              let locationDistance = <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='true' />
+              // let distance={<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode={this.state.travelMode} showDistance='true' showDuration='true' />}
+              //console.log({(<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode='walking' showDistance='true' showDuration='true' />)})
+              console.log(locationDistance)
               return(
                 {...location, selected: false}
               )
             })
             // console.log(allLocations);
             this.setState({
-              locations: allLocations
+              locations: allLocations,
+              allLocations: allLocations
             })
           }
         })
@@ -71,6 +81,13 @@ class CreateTour extends Component {
     })
   }
 
+  switchLocationState(newLocations){
+    console.log('switchLocationState',newLocations)
+    this.setState({
+      locations: newLocations
+    })
+  }
+
   render() {
     // {console.log(this.state.locations)}
 
@@ -88,7 +105,9 @@ class CreateTour extends Component {
           <div className="col s12 m6">
             <Locations
               locations={this.state.locations}
+              allLocations={this.state.allLocations}
               sendLocationToggleToCreateTour={this.toggleLocation.bind(this)}
+              switchLocationState={this.switchLocationState.bind(this)}
             />
           </div>
         </div>

@@ -1,21 +1,10 @@
 import canUseDOM from "can-use-dom";
 //import raf from "raf";
 import React, { Component } from 'react';
-import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, DirectionsRenderer, InfoBox} from 'react-google-maps';
 import base from '../rebase';
 window.base = base; //Use base from console
 import Distance from './Distance'
-
-// var distance = require('google-distance');
-// distance.get(
-//   {
-//     origin: 'San Francisco, CA',
-//     destination: 'San Diego, CA'
-//   },
-//   function(err, data) {
-//     if (err) return console.log(err);
-//     console.log(data);
-// });
 
 const geolocation = (
   canUseDOM && navigator.geolocation ?
@@ -31,12 +20,13 @@ class Map extends Component {
   state = {
     center: null,
     content: null,
-    radius: 6000,
+    radius: 10,
     markers: [],
     travelMode: 'walking'
   };
 
 componentDidMount() {
+
 
   base.auth().onAuthStateChanged(user => {
     if (user) {
@@ -96,7 +86,7 @@ componentDidMount() {
         }
       })
     })
-    console.log(this.state.markers)
+    //console.log(this.state.markers)
   }
 
   handleMarkerClick = this.handleMarkerClick.bind(this);
@@ -141,10 +131,24 @@ componentDidMount() {
         //defaultCenter={{ lat: -25.363882, lng: 131.044922 }}>
         center={this.state.center}>
         {this.state.center && (
+          <Marker position={this.state.center} text={'You are here'}>
+            <Circle
+          center={this.state.center}
+          radius={this.state.radius}
+          options={{
+            fillColor: `red`,
+            fillOpacity: 0.20,
+            strokeColor: `red`,
+            strokeOpacity: 1,
+            strokeWeight: 1,
+          }}
+        />
+
         <InfoWindow position={this.state.center}>
           {/* <div><b>test</b>{this.state.content}</div> */}
           <img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" />
         </InfoWindow>
+      </Marker>
         )}
         {markers.map((marker,index) => (
             <Marker

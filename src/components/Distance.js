@@ -1,3 +1,4 @@
+import canUseDOM from "can-use-dom";
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -25,32 +26,64 @@ import axios from 'axios';
 //   // the basics of a callback function.
 // }
 
+const geolocation = (
+  canUseDOM && navigator.geolocation ?
+  navigator.geolocation :
+  ({
+    getCurrentPosition(success, failure) {
+      failure(`Your browser doesn't support geolocation.`);
+    },
+  })
+);
+
+
 class Distance extends Component {
   constructor (){
     super();
     this.state = {
+      center: null,
       distance: null,
       duration: null
     }
   }
   componentDidMount() {
-    axios.get('https://tiy-orl-proxy.herokuapp.com/conshus-map?origins='+this.props.origin.lat+','+this.props.origin.lng+'&destinations='+this.props.destination.lat+','+this.props.destination.lng+'&mode='+this.props.travelMode+'&units=imperial&language=en-US&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
-    //.then(response => console.log(response) );
-    .then(response => {
+
+    geolocation.getCurrentPosition((position) => {
       this.setState({
-        distance: response.data.rows[0].elements[0].distance.text,
-        duration: response.data.rows[0].elements[0].duration.text
+        center: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
       })
-    });
+
+      //axios.get('https://tiy-orl-proxy.herokuapp.com/conshus-map?origins='+this.props.origin.lat+','+this.props.origin.lng+'&destinations='+this.props.destination.lat+','+this.props.destination.lng+'&mode='+this.props.travelMode+'&units=imperial&language=en-US&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
+      axios.get('https://tiy-orl-proxy.herokuapp.com/conshus-map?origins='+this.state.center.lat+','+this.state.center.lng+'&destinations='+this.props.destination.lat+','+this.props.destination.lng+'&mode='+this.props.travelMode+'&units=imperial&language=en-US&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
+      //.then(response => console.log(response) );
+      .then(response => {
+        this.setState({
+          distance: response.data.rows[0].elements[0].distance.text,
+          duration: response.data.rows[0].elements[0].duration.text
+        })
+      });
+
+
+    })
+
+  }
+  calculating(){
+    if (this.state.center === null){
+      return 'Calculating distance...'
+    }
   }
   render() {
-    console.log(this.props)
-    console.log(this.state)
+    //console.log(this.props)
+    //console.log(this.state)
     return (
-      <div className="Distance">
-        <span>&nbsp;{this.props.showDistance=='true' && this.state.distance}&nbsp;</span>
-        <span>&nbsp;{this.props.showDuration=='true' && this.state.duration}&nbsp;</span>
-      </div>
+      <span className="Distance">
+        { this.calculating() }
+        <span>&nbsp;{this.props.showDistance==='true' && this.state.distance}&nbsp;</span>
+        <span>&nbsp;{this.props.showDuration==='true' && this.state.duration}&nbsp;</span>
+      </span>
     )
   }
 }
