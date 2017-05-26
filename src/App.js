@@ -20,7 +20,7 @@ class App extends Component {
             <Route exact path="/" component={Home}/>
             <Route path="/tours" component={Tours}/>
             <Route path="/user/:uid/create" component={CreateTour}/>
-            <Route path="/tour/:id" component={Tour}/>
+            <Route path="/tour/:tourId"  render={(defaultProps) =>  <Tour {...defaultProps}/>} />
           </div>
         </Router>
 

@@ -132,7 +132,7 @@ class Locations extends Component {
     console.log(tourLocationIdsOnly)
     if (this.state.tourId === '' && this.state.initialSave === false){
       base.push(`/tours/`,
-      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP }})
+      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP, creatorPhoto: this.state.user.photoURL }})
       .then(results => {
         console.log(results.key)
         console.log(this.state.initialSave)
