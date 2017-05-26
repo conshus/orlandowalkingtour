@@ -42,7 +42,7 @@ class CreateTour extends Component {
               let locationDistance = <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='true' />
               // let distance={<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode={this.state.travelMode} showDistance='true' showDuration='true' />}
               //console.log({(<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode='walking' showDistance='true' showDuration='true' />)})
-              console.log(locationDistance)
+              //console.log(locationDistance)
               return(
                 {...location, selected: false}
               )
