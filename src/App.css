@@ -70,10 +70,10 @@
   }
 }
 @media only screen and (min-width: 601px){
-  #containerElement, #mapElement {
+  #containerElement, #mapElement, #map {
     height: 88vh;
   }
-  #allLocations, #selectedLocations {
+  #allLocations, #selectedLocations, #directionsPanel {
     height: 80vh;
   }
 }
@@ -97,8 +97,4 @@
 .modalContent {
   height: 35vh;
   overflow-y: auto;
-}
-
-#map, #directionsPanel {
-  height: 100vh;
 }
