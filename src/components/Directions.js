@@ -4,13 +4,22 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 
-class Directions extends Component {
+export class Map extends Component {
   constructor(){
     super();
     this.state = {
 
     }
   }
+
+  shouldComponentUpdate(){
+    return false;
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng})
+  }
+
   componentDidMount(){
     // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
     // //.then(response => console.log(response) );
@@ -21,10 +30,8 @@ class Directions extends Component {
       center: { lat: this.props.lat, lng: this.props.lng},
       zoom: 8
     });
-  }
 
-  shouldComponentUpdate(){
-    return false;
+
   }
 
 
@@ -37,4 +44,39 @@ class Directions extends Component {
 
 }
 
-export default Directions;
+//export default Map;
+
+export class Directions extends Component {
+  constructor(){
+    super();
+    this.state = {
+
+    }
+  }
+  componentDidMount(){
+    // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
+    // //.then(response => console.log(response) );
+    // .then(response => {
+    //   console.log(response)
+    // });
+    // this.map = new google.maps.Map( this.refs.map, {
+    //   center: { lat: this.props.lat, lng: this.props.lng},
+    //   zoom: 8
+    // });
+  }
+
+  shouldComponentUpdate(){
+    return false;
+  }
+
+
+
+  render(){
+    return(
+      <div id="directionsPanel" ref="directionsPanel" />
+    )
+  }
+
+}
+
+//export class Directions;

@@ -1,8 +1,8 @@
 import canUseDOM from "can-use-dom";
 import React, { Component } from 'react';
 import base from '../rebase'
-import Map from './Map';
-import Directions from './Directions'
+//import Map from './Map';
+import {Directions, Map} from './Directions'
 import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, DirectionsRenderer, InfoBox} from 'react-google-maps';
 
 var google;
@@ -73,7 +73,8 @@ class Tour extends Component {
       <div className="startTour">
         <div className="row">
           <div className="col s12 m6" style={{padding:0}}>
-            Map
+            <button onClick={() => this.setState({origin:{lat: 40.7128, lng: -74.005}})}>New York</button>
+          <Map lat={this.state.origin.lat} lng={this.state.origin.lng} />
             {/* <Map
               locations={this.state.mapLocations}
               containerElement={<div id='containerElement' />}

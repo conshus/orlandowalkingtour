@@ -99,6 +99,6 @@
   overflow-y: auto;
 }
 
-#map {
+#map, #directionsPanel {
   height: 100vh;
 }
