@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import base from '../rebase'
 import Map from './Map';
 import Directions from './Directions'
+import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, DirectionsRenderer, InfoBox} from 'react-google-maps';
+
+var google;
 
 const geolocation = (
   canUseDOM && navigator.geolocation ?
@@ -21,14 +24,18 @@ class Tour extends Component {
       tour: [],
       startTour: false,
       origin: null,
-      destination: {}
+      destination: null,
+      locations:[]
     }
   }
   componentDidMount(){
     base.bindToState(`/tours/${this.props.match.params.tourId}`, {
       context: this,
       state: 'tour',
-      asArray: false
+      asArray: false,
+      then(response){
+        console.log(response)
+      }
     });
 
     geolocation.getCurrentPosition((position) => {
@@ -36,14 +43,32 @@ class Tour extends Component {
         origin: {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        }
+        },
+        locations: this.state.origin
       })
     })
+
+    // const DirectionsService = new google.maps.DirectionsService();
+    //
+    // DirectionsService.route({
+    //   origin: this.state.origin,
+    //   destination: this.state.destination,
+    //   travelMode: google.maps.TravelMode.DRIVING,
+    // }, (result, status) => {
+    //   if (status === google.maps.DirectionsStatus.OK) {
+    //     this.setState({
+    //       directions: result,
+    //     });
+    //   } else {
+    //     console.error(`error fetching directions ${result}`);
+    //   }
+    // });
 
 
   }
   startTour(){
     console.log(this.state.tour.sites)
+    console.log(this.state.locations)
     return (
       <div className="startTour">
         <div className="row">
@@ -59,6 +84,8 @@ class Tour extends Component {
             Your Location
             Directions
             Destination
+            <Directions lat={-34.397} lng={150.644}/>
+
             {/* <Locations
               locations={this.state.locations}
               allLocations={this.state.allLocations}
@@ -85,7 +112,6 @@ class Tour extends Component {
     console.log(this.state.origin)
     return (
       <div className="Tour">
-        <Directions />
         {!this.state.startTour && this.tourInfo()}
         {this.state.startTour && this.startTour()}
       </div>

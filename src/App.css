@@ -98,3 +98,7 @@
   height: 35vh;
   overflow-y: auto;
 }
+
+#map {
+  height: 100vh;
+}
