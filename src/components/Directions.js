@@ -63,6 +63,24 @@ export class Directions extends Component {
     //   center: { lat: this.props.lat, lng: this.props.lng},
     //   zoom: 8
     // });
+
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setPanel(this.refs.directionsPanel);
+
+      var request = {
+        origin:'orlando, fl',
+        destination:'tampa, fl',
+        travelMode: 'DRIVING'
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
   }
 
   shouldComponentUpdate(){
