@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */ //found this here: https://github.com/tomchentw/react-google-maps/issues/414#issuecomment-280883424
 /* global google */ //for google is not defined error: used in examples here https://tomchentw.github.io/react-google-maps/
 import React, { Component } from 'react';
-import axios from 'axios';
-
+//import axios from 'axios';
 
 export class Map extends Component {
   constructor(){
@@ -17,24 +16,15 @@ export class Map extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng})
+    this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng })
   }
 
   componentDidMount(){
-    // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
-    // //.then(response => console.log(response) );
-    // .then(response => {
-    //   console.log(response)
-    // });
     this.map = new google.maps.Map( this.refs.map, {
-      center: { lat: this.props.lat, lng: this.props.lng},
+      center: { lat: this.props.lat, lng: this.props.lng },
       zoom: 8
     });
-
-
   }
-
-
 
   render(){
     return(
@@ -43,62 +33,6 @@ export class Map extends Component {
   }
 
 }
-
-//export default Map;
-
-export class Directions extends Component {
-  constructor(){
-    super();
-    this.state = {
-
-    }
-  }
-  componentDidMount(){
-    // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
-    // //.then(response => console.log(response) );
-    // .then(response => {
-    //   console.log(response)
-    // });
-    // this.map = new google.maps.Map( this.refs.map, {
-    //   center: { lat: this.props.lat, lng: this.props.lng},
-    //   zoom: 8
-    // });
-
-
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsDisplay.setPanel(this.refs.directionsPanel);
-
-      var request = {
-        origin:'orlando, fl',
-        destination:'tampa, fl',
-        travelMode: 'DRIVING'
-      };
-      directionsService.route(request, function(response, status) {
-        if (status == 'OK') {
-          directionsDisplay.setDirections(response);
-        }
-      });
-
-  }
-
-  shouldComponentUpdate(){
-    return false;
-  }
-
-
-
-  render(){
-    return(
-      <div id="directionsPanel" ref="directionsPanel" />
-    )
-  }
-
-}
-
-//export class Directions;
-
 
 
 export class MapAndDirections extends Component {
@@ -109,16 +43,10 @@ export class MapAndDirections extends Component {
     }
   }
   componentDidMount(){
-    // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
-    // //.then(response => console.log(response) );
-    // .then(response => {
-    //   console.log(response)
-    // });
     this.map = new google.maps.Map( this.refs.map, {
-      center: { lat: this.props.lat, lng: this.props.lng},
+      center: { lat: this.props.lat, lng: this.props.lng },
       zoom: 8
     });
-
 
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -126,16 +54,16 @@ export class MapAndDirections extends Component {
     directionsDisplay.setMap(this.map);
     directionsDisplay.setPanel(this.refs.directionsPanel);
 
-      var request = {
-        origin:'orlando, fl',
-        destination:'tampa, fl',
-        travelMode: 'DRIVING'
-      };
-      directionsService.route(request, function(response, status) {
-        if (status == 'OK') {
-          directionsDisplay.setDirections(response);
-        }
-      });
+    var request = {
+      origin: { lat: this.props.lat, lng: this.props.lng },
+      destination:'tampa, fl',
+      travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(response);
+      }
+    });
 
   }
 
@@ -144,29 +72,25 @@ export class MapAndDirections extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-
-    //this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng})
-
+    document.getElementById('directionsPanel').innerHTML = '';
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(this.map);
     directionsDisplay.setPanel(this.refs.directionsPanel);
 
-      var request = {
-        origin: {lat: nextProps.lat, lng: nextProps.lng},
-        destination:'tampa, fl',
-        travelMode: 'DRIVING'
-      };
-      directionsService.route(request, function(response, status) {
-        if (status == 'OK') {
-          directionsDisplay.setDirections(response);
-        }
-      });
+    var request = {
+      origin: { lat: nextProps.lat, lng: nextProps.lng },
+      destination:'tampa, fl',
+      travelMode: 'DRIVING'
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == 'OK') {
+        directionsDisplay.setDirections(response);
+      }
+    });
 
   }
-
-
 
   render(){
     return(
@@ -182,5 +106,3 @@ export class MapAndDirections extends Component {
   }
 
 }
-
-//export class Directions;
