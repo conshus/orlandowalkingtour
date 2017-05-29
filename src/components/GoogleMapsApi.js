@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */ //found this here: https://github.com/tomchentw/react-google-maps/issues/414#issuecomment-280883424
 /* global google */ //for google is not defined error: used in examples here https://tomchentw.github.io/react-google-maps/
 import React, { Component } from 'react';
-//import axios from 'axios';
 
 export class Map extends Component {
 
@@ -31,8 +30,10 @@ export class Map extends Component {
 export class MapAndDirections extends Component {
 
   getMapAndDirections(start,end,mode){
+    console.log('getMapAndDirections',start,end)
     this.map = new google.maps.Map( this.refs.map, {
-      center: { lat: this.props.lat, lng: this.props.lng },
+      // center: { lat: this.props.lat, lng: this.props.lng },
+      center: start,
       zoom: 8
     });
 
@@ -44,8 +45,10 @@ export class MapAndDirections extends Component {
     directionsDisplay.setPanel(this.refs.directionsPanel);
 
     var request = {
-      origin: { lat: start.lat, lng: start.lng },
-      destination: end,
+      // origin: { lat: start.lat, lng: start.lng },
+      // destination:  { lat: end.lat, lng: end.lng },
+      origin: start,
+      destination:  end,
       travelMode: mode
     };
     directionsService.route(request, function(response, status) {
@@ -58,7 +61,9 @@ export class MapAndDirections extends Component {
   }
 
   componentDidMount(){
-    this.getMapAndDirections({ lat: this.props.lat, lng: this.props.lng }, 'tampa, fl', 'DRIVING');
+    console.log('componentDidMount',this.props.start)
+    // this.getMapAndDirections({ lat: this.props.start.lat, lng: this.props.start.lng }, 'tampa, fl', 'DRIVING');
+    this.getMapAndDirections(this.props.start, this.props.end, this.props.mode);
   }
 
   shouldComponentUpdate(){
@@ -66,8 +71,17 @@ export class MapAndDirections extends Component {
   }
 
   componentWillReceiveProps(nextProps){
+    document.getElementById('directionsPanel').innerHTML = '';
+
     console.log('nextProps:', nextProps)
-    this.getMapAndDirections({ lat: nextProps.lat, lng: nextProps.lng }, 'tallahassee, fl', 'DRIVING');
+    // let newStartSite = nextProps.start
+    // console.log('newStartSite:', newStartSite)
+    // this.setState({
+    //   startSite: newStartSite
+    // })
+    this.getMapAndDirections(nextProps.start, nextProps.end, nextProps.mode);
+    //this.getMapAndDirections(this.state.startSite, 'tallahassee, fl', 'DRIVING');
+    console.log('this.props.start:',this.props.start)
   }
 
   render(){
