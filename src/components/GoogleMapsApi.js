@@ -28,10 +28,14 @@ export class Map extends Component {
 
 }
 
-
 export class MapAndDirections extends Component {
 
   getMapAndDirections(start,end,mode){
+    this.map = new google.maps.Map( this.refs.map, {
+      center: { lat: this.props.lat, lng: this.props.lng },
+      zoom: 8
+    });
+
     document.getElementById('directionsPanel').innerHTML = '';
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -41,7 +45,7 @@ export class MapAndDirections extends Component {
 
     var request = {
       origin: { lat: start.lat, lng: start.lng },
-      destination:'tampa, fl',
+      destination: end,
       travelMode: mode
     };
     directionsService.route(request, function(response, status) {
@@ -54,10 +58,6 @@ export class MapAndDirections extends Component {
   }
 
   componentDidMount(){
-    this.map = new google.maps.Map( this.refs.map, {
-      center: { lat: this.props.lat, lng: this.props.lng },
-      zoom: 8
-    });
     this.getMapAndDirections({ lat: this.props.lat, lng: this.props.lng }, 'tampa, fl', 'DRIVING');
   }
 
@@ -67,7 +67,7 @@ export class MapAndDirections extends Component {
 
   componentWillReceiveProps(nextProps){
     console.log('nextProps:', nextProps)
-    this.getMapAndDirections({ lat: nextProps.lat, lng: nextProps.lng }, 'tampa, fl', 'DRIVING');
+    this.getMapAndDirections({ lat: nextProps.lat, lng: nextProps.lng }, 'tallahassee, fl', 'DRIVING');
   }
 
   render(){
