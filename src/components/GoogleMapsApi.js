@@ -98,3 +98,89 @@ export class Directions extends Component {
 }
 
 //export class Directions;
+
+
+
+export class MapAndDirections extends Component {
+  constructor(){
+    super();
+    this.state = {
+
+    }
+  }
+  componentDidMount(){
+    // axios.get('https://crossorigin.me/https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyBs6d9RlcvwZc1RfezhN4XO2rx8EbGzEfU')
+    // //.then(response => console.log(response) );
+    // .then(response => {
+    //   console.log(response)
+    // });
+    this.map = new google.maps.Map( this.refs.map, {
+      center: { lat: this.props.lat, lng: this.props.lng},
+      zoom: 8
+    });
+
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(this.map);
+    directionsDisplay.setPanel(this.refs.directionsPanel);
+
+      var request = {
+        origin:'orlando, fl',
+        destination:'tampa, fl',
+        travelMode: 'DRIVING'
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
+  }
+
+  shouldComponentUpdate(){
+    return false;
+  }
+
+  componentWillReceiveProps(nextProps){
+
+    //this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng})
+
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(this.map);
+    directionsDisplay.setPanel(this.refs.directionsPanel);
+
+      var request = {
+        origin: {lat: nextProps.lat, lng: nextProps.lng},
+        destination:'tampa, fl',
+        travelMode: 'DRIVING'
+      };
+      directionsService.route(request, function(response, status) {
+        if (status == 'OK') {
+          directionsDisplay.setDirections(response);
+        }
+      });
+
+  }
+
+
+
+  render(){
+    return(
+      <div className="MapAndDirections row">
+        <div className="col s12 m6" style={{padding:0}}>
+          <div id="map" ref="map" />
+        </div>
+        <div className="col s12 m6" style={{padding:0}}>
+          <div id="directionsPanel" ref="directionsPanel" />
+        </div>
+      </div>
+    )
+  }
+
+}
+
+//export class Directions;
