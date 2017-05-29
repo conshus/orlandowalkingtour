@@ -1,12 +1,9 @@
 import canUseDOM from "can-use-dom";
 import React, { Component } from 'react';
-import base from '../rebase'
-//import Map from './Map';
-import {Directions, Map, MapAndDirections} from './GoogleMapsApi'
-import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, DirectionsRenderer, InfoBox} from 'react-google-maps';
+import base from '../rebase';
+import {Directions, Map, MapAndDirections} from './GoogleMapsApi';
 
-var google;
-
+//Get current location
 const geolocation = (
   canUseDOM && navigator.geolocation ?
   navigator.geolocation :
@@ -29,15 +26,6 @@ class Tour extends Component {
     }
   }
   componentDidMount(){
-    base.bindToState(`/tours/${this.props.match.params.tourId}`, {
-      context: this,
-      state: 'tour',
-      asArray: false,
-      then(response){
-        console.log(response)
-      }
-    });
-
     geolocation.getCurrentPosition((position) => {
       this.setState({
         origin: {
@@ -48,73 +36,49 @@ class Tour extends Component {
       })
     })
 
-    // const DirectionsService = new google.maps.DirectionsService();
-    //
-    // DirectionsService.route({
-    //   origin: this.state.origin,
-    //   destination: this.state.destination,
-    //   travelMode: google.maps.TravelMode.DRIVING,
-    // }, (result, status) => {
-    //   if (status === google.maps.DirectionsStatus.OK) {
-    //     this.setState({
-    //       directions: result,
-    //     });
-    //   } else {
-    //     console.error(`error fetching directions ${result}`);
-    //   }
-    // });
+    base.bindToState(`/tours/${this.props.match.params.tourId}`, {
+      context: this,
+      state: 'tour',
+      asArray: false,
+      // then(response){
+      //   console.log('bind to state',response)
+      // }
+    }).then(response => {
+            console.log('bind to state',response)
+          });
 
 
   }
+
   startTour(){
-    console.log(this.state.tour.sites)
-    console.log(this.state.locations)
+    console.log('this.state.tour.sites:',this.state.tour.sites)
+    console.log('this.state.locations:',this.state.locations)
     return (
       <div className="startTour">
-        {/* <div className="row">
-          <div className="col s12 m6" style={{padding:0}}> */}
-            <button onClick={() => this.setState({origin:{lat: 40.7128, lng: -74.005}})}>New York</button>
-          {/* <Map lat={this.state.origin.lat} lng={this.state.origin.lng} /> */}
-            {/* <Map
-              locations={this.state.mapLocations}
-              containerElement={<div id='containerElement' />}
-              mapElement={<div id='mapElement' />}
-            /> */}
-          {/* </div>
-          <div className="col s12 m6">
-            Your Location
-            Directions
-            Destination
-            <Directions lat={-34.397} lng={150.644}/> */}
-
-            {/* <Locations
-              locations={this.state.locations}
-              allLocations={this.state.allLocations}
-              sendLocationToggleToCreateTour={this.toggleLocation.bind(this)}
-              switchLocationState={this.switchLocationState.bind(this)}
-            /> */}
-          {/* </div>
-        </div> */}
-
+        <button onClick={() => this.setState({origin:{lat: 40.7128, lng: -74.005}})}>New York</button>
         <MapAndDirections lat={this.state.origin.lat} lng={this.state.origin.lng}/>
-
-
       </div>
     )
   }
+
   tourInfo(){
     return (
       <div className="tourInfo">
         <h1>{this.state.tour.tourName}</h1>
-        <h6>by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />{this.state.tour.creator}</h6>
-        <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}><i className="material-icons" aria-hidden="true">directions_walk</i> Start Tour</button>
+        <h6>
+          by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
+          {this.state.tour.creator}
+        </h6>
+        <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>
+          <i className="material-icons" aria-hidden="true">directions_walk</i> Start Tour
+        </button>
       </div>
     )
   }
   render() {
-    console.log(this.props.match.params)
-    console.log(this.state.tour)
-    console.log(this.state.origin)
+    console.log('this.props.match.params:',this.props.match.params)
+    console.log('this.state.tour:',this.state.tour)
+    console.log('this.state.origin:',this.state.origin)
     return (
       <div className="Tour">
         {!this.state.startTour && this.tourInfo()}

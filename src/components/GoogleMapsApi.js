@@ -4,12 +4,6 @@ import React, { Component } from 'react';
 //import axios from 'axios';
 
 export class Map extends Component {
-  constructor(){
-    super();
-    this.state = {
-
-    }
-  }
 
   shouldComponentUpdate(){
     return false;
@@ -36,42 +30,8 @@ export class Map extends Component {
 
 
 export class MapAndDirections extends Component {
-  constructor(){
-    super();
-    this.state = {
 
-    }
-  }
-  componentDidMount(){
-    this.map = new google.maps.Map( this.refs.map, {
-      center: { lat: this.props.lat, lng: this.props.lng },
-      zoom: 8
-    });
-
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    directionsDisplay = new google.maps.DirectionsRenderer();
-    directionsDisplay.setMap(this.map);
-    directionsDisplay.setPanel(this.refs.directionsPanel);
-
-    var request = {
-      origin: { lat: this.props.lat, lng: this.props.lng },
-      destination:'tampa, fl',
-      travelMode: 'DRIVING'
-    };
-    directionsService.route(request, function(response, status) {
-      if (status == 'OK') {
-        directionsDisplay.setDirections(response);
-      }
-    });
-
-  }
-
-  shouldComponentUpdate(){
-    return false;
-  }
-
-  componentWillReceiveProps(nextProps){
+  getMapAndDirections(start,end,mode){
     document.getElementById('directionsPanel').innerHTML = '';
     var directionsDisplay;
     var directionsService = new google.maps.DirectionsService();
@@ -80,16 +40,34 @@ export class MapAndDirections extends Component {
     directionsDisplay.setPanel(this.refs.directionsPanel);
 
     var request = {
-      origin: { lat: nextProps.lat, lng: nextProps.lng },
+      origin: { lat: start.lat, lng: start.lng },
       destination:'tampa, fl',
-      travelMode: 'DRIVING'
+      travelMode: mode
     };
     directionsService.route(request, function(response, status) {
       if (status == 'OK') {
         directionsDisplay.setDirections(response);
+      } else {
+        console.log('Directions request failed due to ', status)
       }
     });
+  }
 
+  componentDidMount(){
+    this.map = new google.maps.Map( this.refs.map, {
+      center: { lat: this.props.lat, lng: this.props.lng },
+      zoom: 8
+    });
+    this.getMapAndDirections({ lat: this.props.lat, lng: this.props.lng }, 'tampa, fl', 'DRIVING');
+  }
+
+  shouldComponentUpdate(){
+    return false;
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log('nextProps:', nextProps)
+    this.getMapAndDirections({ lat: nextProps.lat, lng: nextProps.lng }, 'tampa, fl', 'DRIVING');
   }
 
   render(){
