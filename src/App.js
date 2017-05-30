@@ -4,6 +4,7 @@ import Tours from './components/Tours';
 import CreateTour from './components/CreateTour';
 import Tour from './components/Tour';
 import UserTours from './components/UserTours';
+import SuggestALocation from './components/SuggestALocation';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -23,6 +24,7 @@ class App extends Component {
             <Route path="/tour/:tourId"  render={(defaultProps) =>  <Tour {...defaultProps}/>} />
             <Route path="/user/:uid/create" component={CreateTour}/>
             <Route path="/user/:uid/tours" component={UserTours}/>
+            <Route path="/user/:uid/suggestALocation" component={SuggestALocation}/>
           </div>
         </Router>
 

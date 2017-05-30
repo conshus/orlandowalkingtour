@@ -119,7 +119,7 @@ class Home extends Component {
           <br/>{this.state.user.displayName}
           <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link>
           <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link>
-          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/submit`}>Suggest a Location</Link>
+          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link>
         </div>
       )
     }

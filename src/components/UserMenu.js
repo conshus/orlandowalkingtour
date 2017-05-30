@@ -32,7 +32,7 @@ class UserMenu extends Component {
       <span>
         <li><Link to={`/user/${this.state.user.uid}/create`}>Create a Tour</Link></li>
         <li><Link to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link></li>
-        <li><Link to={`/user/${this.state.user.uid}/suggest`}>Suggest A Location</Link></li>
+        <li><Link to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest A Location</Link></li>
       </span>
     )
   }
