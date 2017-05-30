@@ -27,26 +27,25 @@ export class Map extends Component {
 
 }
 
+//Have to move outside the loop, otherwise the directions will be printed twice
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
+directionsDisplay = new google.maps.DirectionsRenderer();
+
 export class MapAndDirections extends Component {
 
   getMapAndDirections(start,end,mode){
     console.log('getMapAndDirections',start,end)
     this.map = new google.maps.Map( this.refs.map, {
-      // center: { lat: this.props.lat, lng: this.props.lng },
       center: start,
       zoom: 8
     });
 
-    document.getElementById('directionsPanel').innerHTML = '';
-    var directionsDisplay;
-    var directionsService = new google.maps.DirectionsService();
-    directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(this.map);
+    directionsDisplay.setPanel(null);
     directionsDisplay.setPanel(this.refs.directionsPanel);
 
     var request = {
-      // origin: { lat: start.lat, lng: start.lng },
-      // destination:  { lat: end.lat, lng: end.lng },
       origin: start,
       destination: end,
       travelMode: mode
@@ -62,7 +61,6 @@ export class MapAndDirections extends Component {
 
   componentDidMount(){
     console.log('componentDidMount',this.props.start)
-    // this.getMapAndDirections({ lat: this.props.start.lat, lng: this.props.start.lng }, 'tampa, fl', 'DRIVING');
     this.getMapAndDirections(this.props.start, this.props.end, this.props.mode);
   }
 
@@ -71,16 +69,9 @@ export class MapAndDirections extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    document.getElementById('directionsPanel').innerHTML = '';
 
     console.log('nextProps:', nextProps)
-    // let newStartSite = nextProps.start
-    // console.log('newStartSite:', newStartSite)
-    // this.setState({
-    //   startSite: newStartSite
-    // })
     this.getMapAndDirections(nextProps.start, nextProps.end, nextProps.mode);
-    //this.getMapAndDirections(this.state.startSite, 'tallahassee, fl', 'DRIVING');
     console.log('this.props.start:',this.props.start)
   }
 

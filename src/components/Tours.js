@@ -33,7 +33,7 @@ class Tours extends Component {
         {this.state.tours.map((tour, index) => {
           console.log(tour)
           return(
-            <div>
+            <div key={`tour-${index}`}>
               <h1><Link to={`/tour/${tour.key}`} className="waves-effect waves-light btn">{tour.tourName}</Link></h1>
             </div>
 

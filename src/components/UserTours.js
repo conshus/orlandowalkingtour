@@ -54,7 +54,7 @@ class UserTours extends Component {
         {this.state.savedTours.map((savedTour, index) => {
           console.log(savedTour)
           return(
-            <div>
+            <div key={`savedTour-${index}`}>
               <h1><Link to={`/tour/${savedTour.tourId}`} className="waves-effect waves-light btn">{savedTour.tourName}</Link></h1>
             </div>
 
