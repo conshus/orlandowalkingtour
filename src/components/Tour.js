@@ -17,8 +17,8 @@ const geolocation = (
 );
 
 class Tour extends Component {
-  constructor (){
-    super();
+  constructor (props){
+    super(props);
     this.state = {
       tour: [],
       startTour: false,
@@ -26,7 +26,9 @@ class Tour extends Component {
       destination: null,
       locations:[],
       travelMode: 'WALKING',
-      modal: false
+      modal: false,
+      tourLeg:{},
+      startNewLeg: true
     }
   }
   componentDidMount(){
@@ -57,10 +59,12 @@ class Tour extends Component {
             context: this,
             asArray: false,
             then(siteInfo){
+              //console.log('site:',site)
               //siteInfoWithLatLng = {...siteInfo, lat: siteInfo.location.latitude, lng: siteInfo.location.longitude}
               siteInfoWithLatLng = {
                 ...siteInfo,
-                latlng: {lat: siteInfo.location.latitude, lng: siteInfo.location.longitude}
+                latlng: {lat: siteInfo.location.latitude, lng: siteInfo.location.longitude},
+                locationId: site
               }
               console.log('siteInfoWithLatLng', siteInfoWithLatLng)
               newLocations = this.state.locations.concat(siteInfoWithLatLng)
@@ -76,6 +80,9 @@ class Tour extends Component {
         })
       }
     });
+
+    this.setUpTourLeg()
+
   }
 
   displayTravelModes(){
@@ -104,6 +111,8 @@ class Tour extends Component {
   startTour(){
     console.log('this.state.tour.sites:',this.state.tour.sites)
     console.log('this.state.locations:',this.state.locations)
+    //console.log('indexOf destination:',this.state.tour.sites.indexOf(this.state.destination.locationId))
+
     return (
       <div className="startTour">
         {/* <button onClick={() => this.setState({origin:{lat: 40.7128, lng: -74.005}})}>New York</button> */}
@@ -134,16 +143,61 @@ class Tour extends Component {
       </div>
     )
   }
+
+  setUpTourLeg(){
+    if(this.state.destination){
+      let tourLegPosition, backToStartLocation, backToStartButton, nextLocation, nextButton, previousLocation, previousButton
+      console.log('destination exists!');
+      console.log('indexOf destination:',this.state.tour.sites.indexOf(this.state.destination.locationId));
+      tourLegPosition = this.state.tour.sites.indexOf(this.state.destination.locationId);
+      backToStartLocation = this.state.locations[0];
+      if (tourLegPosition === 0){
+        backToStartButton = false
+      }else { backToStartButton = true}
+
+      nextLocation = this.state.locations[tourLegPosition+1];
+      if (nextLocation){
+        nextButton = true
+      } else { nextButton = false}
+      console.log('nextLocation',nextLocation)
+
+      previousLocation = this.state.locations[tourLegPosition-1];
+      if (previousLocation){
+        previousButton = true
+      } else { previousButton = false}
+      console.log('previousLocation',previousLocation)
+
+      this.setState({
+        tourLeg: {
+          tourLegPosition:tourLegPosition,
+          backToStartLocation: backToStartLocation,
+          backToStartButton: backToStartButton,
+          nextLocation: nextLocation,
+          nextButton: nextButton,
+          previousLocation: previousLocation,
+          previousButton: previousButton
+        },
+        startNewLeg: false
+      })
+
+
+
+    } else {
+      console.log('destination does not exist')
+    }
+  }
   render() {
     console.log('this.props.match.params:',this.props.match.params)
     console.log('this.state.tour:',this.state.tour)
     console.log('this.state.origin:',this.state.origin)
-    console.log('this.state.locations:',this.state.locations[0])
+    console.log('this.state.locations:',this.state.locations)
+    console.log('this.state:',this.state)
     return (
       <div className="Tour">
         {!this.state.startTour && this.tourInfo()}
         {this.state.startTour && this.startTour()}
-        <LocationDetails locationInfo = {this.state.destination} modal = {this.state.modal}/>
+        {this.state.startNewLeg && this.setUpTourLeg()}
+        <LocationDetails locationInfo = {this.state.destination} modal = {this.state.modal} tourLeg="yes"/>
       </div>
     )
   }

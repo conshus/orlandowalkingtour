@@ -45,9 +45,12 @@ class LocationDetails extends Component {
                 </div>
                 <div className="card-action">
                   <span>
-                    <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={()=>{this.setState({modal: false})}}>
-                      <i className="material-icons">clear</i>
-                    </button>
+                    {this.props.tourLeg ?
+                      <h6>Where to?</h6>
+                      : <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={()=>{this.setState({modal: false})}}>
+                        <i className="material-icons">clear</i>
+                      </button>
+                    }
                   </span>
                 </div>
               </div>
