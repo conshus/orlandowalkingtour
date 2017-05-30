@@ -8,14 +8,27 @@ class LocationDetails extends Component {
       modal: false
     }
   }
+  componentDidMount(){
+    console.log('componentDidMount', this.props)
+    this.setState({
+      modal: this.props.modal
+    })
+  }
+
+  componentWillReceiveProps(nextProps){
+    console.log('nextProps:', nextProps)
+    this.setState({
+      modal: nextProps.modal
+    })
+  }
+
   render(){
-    let modal = this.props.modal
-    console.log(this.props)
-    console.log(this.state.modal)
+    console.log('this.props',this.props)
+    console.log('this.state.modal',this.state.modal)
     console.log('modal',modal)
     return(
       <div className="LocationDetails">
-        {modal ?
+        {this.state.modal ?
         <div className="modalWindow">
           <div className="row">
             <div className="col s12 m2 l3"></div>
@@ -32,7 +45,7 @@ class LocationDetails extends Component {
                 </div>
                 <div className="card-action">
                   <span>
-                    <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={()=>{modal=false}}>
+                    <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={()=>{this.setState({modal: false})}}>
                       <i className="material-icons">clear</i>
                     </button>
                   </span>

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import base from '../rebase';
 import {Directions, Map, MapAndDirections} from './GoogleMapsApi';
 import UserMenu from './UserMenu'
+import LocationDetails from './LocationDetails';
 
 //Get current location
 const geolocation = (
@@ -24,7 +25,8 @@ class Tour extends Component {
       origin: null,
       destination: null,
       locations:[],
-      travelMode: 'WALKING'
+      travelMode: 'WALKING',
+      modal: false
     }
   }
   componentDidMount(){
@@ -65,7 +67,8 @@ class Tour extends Component {
               // console.log('siteInfo:',siteInfo)
               console.log('newLocations:', newLocations)
               this.setState({
-                locations: newLocations
+                locations: newLocations,
+                destination: this.state.locations[0]
               })
             }
           })
@@ -77,6 +80,7 @@ class Tour extends Component {
 
   displayTravelModes(){
     console.log('this.state.locations:',this.state.locations)
+    console.log('this.state.destination:',this.state.destination)
     return(
       <form>
         <UserMenu />
@@ -105,7 +109,10 @@ class Tour extends Component {
         {/* <button onClick={() => this.setState({origin:{lat: 40.7128, lng: -74.005}})}>New York</button> */}
         {this.displayTravelModes()}
         {/* <MapAndDirections lat={this.state.origin.lat} lng={this.state.origin.lng}/> */}
-        <MapAndDirections start={ this.state.origin } end={ this.state.locations[0].address } mode={ this.state.travelMode }/>
+        <MapAndDirections start={ this.state.origin } end={ this.state.destination.address } mode={ this.state.travelMode }/>
+        <button className="waves-effect waves-light btn" onClick={()=>{this.setState({modal: true})}}>
+          <i className="material-icons" aria-hidden="true">location_on</i> I'm Here
+        </button>
       </div>
     )
   }
@@ -136,6 +143,7 @@ class Tour extends Component {
       <div className="Tour">
         {!this.state.startTour && this.tourInfo()}
         {this.state.startTour && this.startTour()}
+        <LocationDetails locationInfo = {this.state.destination} modal = {this.state.modal}/>
       </div>
     )
   }
