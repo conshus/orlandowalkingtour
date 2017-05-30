@@ -48,7 +48,7 @@ export class MapAndDirections extends Component {
       // origin: { lat: start.lat, lng: start.lng },
       // destination:  { lat: end.lat, lng: end.lng },
       origin: start,
-      destination:  end,
+      destination: end,
       travelMode: mode
     };
     directionsService.route(request, function(response, status) {
@@ -90,7 +90,7 @@ export class MapAndDirections extends Component {
         <div className="col s12 m6" style={{padding:0}}>
           <div id="map" ref="map" />
         </div>
-        <div className="col s12 m6" style={{padding:0}}>
+        <div className="col s12 m6" id="panelContainer" style={{padding:0}}>
           <div id="directionsPanel" ref="directionsPanel" />
         </div>
       </div>

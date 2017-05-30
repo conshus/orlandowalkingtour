@@ -141,8 +141,8 @@ class Locations extends Component {
           tourId: results.key,
           disableSave: true,
         })
-        base.post(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
-        base.post(`/users/${this.state.user.uid}/tours/${results.key}`, {data: {created: base.database.ServerValue.TIMESTAMP}})
+        //base.post(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
+        base.post(`/users/${this.state.user.uid}/tours/${results.key}/`, {data: {created: base.database.ServerValue.TIMESTAMP}})
         //console.log(this.state)
       })
       //.then()

@@ -2,6 +2,7 @@ import canUseDOM from "can-use-dom";
 import React, { Component } from 'react';
 import base from '../rebase';
 import {Directions, Map, MapAndDirections} from './GoogleMapsApi';
+import UserMenu from './UserMenu'
 
 //Get current location
 const geolocation = (
@@ -78,7 +79,8 @@ class Tour extends Component {
     console.log('this.state.locations:',this.state.locations)
     return(
       <form>
-        Mode of Travel: 
+        <UserMenu />
+        Mode of Travel:
         <span onClick={() => this.setState({travelMode:'WALKING'})}>
           <input name="travelMode" type="radio" id="walk" checked={this.state.travelMode==="WALKING" ? 'checked' : '' }/>
           <label htmlFor="walk">Walk</label>
@@ -111,6 +113,7 @@ class Tour extends Component {
   tourInfo(){
     return (
       <div className="tourInfo">
+        <UserMenu />
         <h1>{this.state.tour.tourName}</h1>
         <h6>
           by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />

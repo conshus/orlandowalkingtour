@@ -3,6 +3,7 @@ import Home from './components/Home';
 import Tours from './components/Tours';
 import CreateTour from './components/CreateTour';
 import Tour from './components/Tour';
+import UserTours from './components/UserTours';
 import logo from './logo.svg';
 import './App.css';
 import {
@@ -19,8 +20,9 @@ class App extends Component {
           <div>
             <Route exact path="/" component={Home}/>
             <Route path="/tours" component={Tours}/>
-            <Route path="/user/:uid/create" component={CreateTour}/>
             <Route path="/tour/:tourId"  render={(defaultProps) =>  <Tour {...defaultProps}/>} />
+            <Route path="/user/:uid/create" component={CreateTour}/>
+            <Route path="/user/:uid/tours" component={UserTours}/>
           </div>
         </Router>
 
