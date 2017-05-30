@@ -5,7 +5,8 @@ var $ = window.jQuery = require('jquery');
 window.Vel = require('materialize-css/js/velocity.min'); //needed this to make the sideNav open. found solution here: https://github.com/Dogfalo/materialize/issues/1229#issuecomment-242328892
 import base from '../rebase';
 window.base = base; //Use base from console
-import Distance from './Distance'
+import Distance from './Distance';
+import LocationDetails from './LocationDetails';
 
 import { render } from 'react-dom';
 import {
@@ -223,7 +224,8 @@ getDistance(location){
                         {location.name}
                         {this.getDistance(location)}
                       </label>
-                      <a onClick={this.toggleModal.bind(this,location)} data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
+                      {/* <a onClick={this.toggleModal.bind(this,location)} data-activates="moreInfoSlideOut" className="secondary-content moreInfo"> */}
+                      <a onClick={()=>{this.setState({moreInfoLocation: location, modal: true})}} data-activates="moreInfoSlideOut" className="secondary-content moreInfo">
                         <i className="material-icons">info_outline</i>
                       </a>
                     </div>
@@ -316,30 +318,31 @@ getDistance(location){
 
         {/* Modal */}
         {/* {this.displayModal()} */}
-        {this.state.modal ?
-          <div className="modalWindow">
-            <div className="row">
-              <div className="col s12 m2 l3"></div>
-              <div className="col s12 m8 l6">
-                <div className="card">
-                  <div className="card-image">
-                    {this.state.moreInfoLocation.images ?
-                    <img src={this.state.moreInfoLocation.images[0]} />
-                    : null}
-                    <span className="card-title">{this.state.moreInfoLocation.name}</span>
-                  </div>
-                  <div className="card-content modalContent">
-                    <p>{this.state.moreInfoLocation.description}</p>
-                  </div>
-                  <div className="card-action">
-                    <span><button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={this.toggleModal.bind(this)}><i className="material-icons">clear</i></button></span>
-                  </div>
-                </div>
-              </div>
-              <div className="col s12 m2 l3"></div>
-            </div>
-          </div>
-          : null}
+        <LocationDetails locationInfo = {this.state.moreInfoLocation} modal = {this.state.modal}/>
+      {/*   {this.state.modal ?
+          // <div className="modalWindow">
+          //   <div className="row">
+          //     <div className="col s12 m2 l3"></div>
+          //     <div className="col s12 m8 l6">
+          //       <div className="card">
+          //         <div className="card-image">
+          //           {this.state.moreInfoLocation.images ?
+          //           <img src={this.state.moreInfoLocation.images[0]} />
+          //           : null}
+          //           <span className="card-title">{this.state.moreInfoLocation.name}</span>
+          //         </div>
+          //         <div className="card-content modalContent">
+          //           <p>{this.state.moreInfoLocation.description}</p>
+          //         </div>
+          //         <div className="card-action">
+          //           <span><button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={this.toggleModal.bind(this)}><i className="material-icons">clear</i></button></span>
+          //         </div>
+          //       </div>
+          //     </div>
+          //     <div className="col s12 m2 l3"></div>
+          //   </div>
+          // </div>
+          : null} */}
 
 
       </div>
