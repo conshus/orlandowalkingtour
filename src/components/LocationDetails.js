@@ -21,6 +21,12 @@ class LocationDetails extends Component {
       modal: nextProps.modal
     })
   }
+  sendBackModalChange(){
+    this.props.sendBackModalChange();
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
 
   render(){
     console.log('this.props',this.props)
@@ -47,7 +53,7 @@ class LocationDetails extends Component {
                   <span>
                     {this.props.tourLeg ?
                       <h6>Where to?</h6>
-                      : <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={()=>{this.setState({modal: false})}}>
+                      : <button className="btn-floating btn-large waves-effect waves-light blue-grey lighten-2" onClick={this.sendBackModalChange.bind(this)}>
                         <i className="material-icons">clear</i>
                       </button>
                     }

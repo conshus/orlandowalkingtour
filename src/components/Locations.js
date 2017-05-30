@@ -282,6 +282,13 @@ getDistance(location){
 //      this.props.switchLocationState('all');
 //    }
   }
+
+  modalChange(){
+    console.log('modalChange')
+    this.setState({
+      modal: !this.state.modal
+    })
+  }
   render() {
     // console.log(this.props.locations)
     // console.log(this.state.tourLocations)
@@ -318,7 +325,7 @@ getDistance(location){
 
         {/* Modal */}
         {/* {this.displayModal()} */}
-        <LocationDetails locationInfo = {this.state.moreInfoLocation} modal = {this.state.modal}/>
+        <LocationDetails sendBackModalChange = {this.modalChange.bind(this)} locationInfo = {this.state.moreInfoLocation} modal = {this.state.modal}/>
       {/*   {this.state.modal ?
           // <div className="modalWindow">
           //   <div className="row">
