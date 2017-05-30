@@ -68,7 +68,7 @@ class UserTours extends Component {
     return(
       <div id="pleaseLogIn">
         <h6>Please Login In</h6>
-        <Link to="/" className="waves-effect waves-light btn">Save</Link>
+        <Link to="/" className="waves-effect waves-light btn">Home</Link>
       </div>
     )
   }

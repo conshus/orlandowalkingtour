@@ -179,13 +179,29 @@ class Tour extends Component {
         },
         startNewLeg: false
       })
-
-
-
     } else {
       console.log('destination does not exist')
     }
   }
+
+  startTourLeg(tourLegButtonPressed){
+    let newDestination={};
+    console.log('startTourLeg',tourLegButtonPressed);
+    if (tourLegButtonPressed === 'previous'){
+      newDestination = this.state.tourLeg.previousLocation;
+    } else if (tourLegButtonPressed === 'next'){
+      newDestination = this.state.tourLeg.nextLocation;
+    } else {
+      newDestination = this.state.tourLeg.backToStartLocation;
+    }
+    console.log('newDestination:', newDestination)
+    this.setState({
+      destination : newDestination,
+      modal: !this.state.modal,
+      startNewLeg: true
+    })
+  }
+
   render() {
     console.log('this.props.match.params:',this.props.match.params)
     console.log('this.state.tour:',this.state.tour)
@@ -197,7 +213,7 @@ class Tour extends Component {
         {!this.state.startTour && this.tourInfo()}
         {this.state.startTour && this.startTour()}
         {this.state.startNewLeg && this.setUpTourLeg()}
-        <LocationDetails locationInfo = {this.state.destination} modal = {this.state.modal} tourLeg="yes"/>
+        <LocationDetails sendBackModalChange = {this.startTourLeg.bind(this)} locationInfo = {this.state.destination} modal = {this.state.modal} tourLeg={this.state.tourLeg}/>
       </div>
     )
   }
