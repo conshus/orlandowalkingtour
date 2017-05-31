@@ -196,7 +196,7 @@ class SuggestALocation extends Component {
 
   displayThankYou(){
     if(!this.state.thankYouGiphy){
-    axios.get('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=thank+you')
+    axios.get('https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=thank+you')
     .then(response => this.setState({thankYouGiphy: response.data.data.image_url}))
     }
 //    .then(response => console.log(response.data.data.image_url))
