@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */ //found this here: https://github.com/tomchentw/react-google-maps/issues/414#issuecomment-280883424
 /* global google */ //for google is not defined error: used in examples here https://tomchentw.github.io/react-google-maps/
 import React, { Component } from 'react';
 

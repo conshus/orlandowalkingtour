@@ -1,6 +1,10 @@
+/* global google */ //for google is not defined error: used in examples here https://tomchentw.github.io/react-google-maps/
 import React, { Component } from 'react';
 import UserMenu from './UserMenu';
 import canUseDOM from "can-use-dom";
+import base from '../rebase';
+window.base = base;
+
 
 //Get current location
 const geolocation = (
@@ -14,7 +18,61 @@ const geolocation = (
 );
 
 class SuggestALocation extends Component {
+  constructor (props){
+    super(props);
+    this.state = {
+      currentLocation: {}
+    }
+  }
+  componentDidMount(){
+    geolocation.getCurrentPosition((position) => {
+      this.setState({
+        currentLocation: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        },
+        //locations: this.state.origin
+      })
+    })
+  }
+
+  reverseGeocoding(){
+    console.log('reverseGeocoding')
+    var geocoder = new google.maps.Geocoder;
+    //var latlng = {}
+    geocoder.geocode({'location': this.state.currentLocation}, function(results, status) {
+      if (status === 'OK') {
+        if (results[0]) {
+          document.getElementById('location_address').value=results[0].formatted_address;
+          console.log(results[0].formatted_address);
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+    })
+
+  }
+
+  testingOnChange(){
+    console.log('event',event)
+    console.log('this',this.fileButton.files[0])
+  }
+
+  submitLocation(){
+    console.log('submit location');
+    //var fileButton = document.getElementById('fileButton');
+    //Get file
+    console.log('file',this.fileButton.files[0])
+    var file = this.fileButton.files[0]
+    //Create a storage ref
+    var storageRef = base.storage().ref('photos/'+file.name);
+    //Upload file
+    storageRef.put(file);
+  }
   render(){
+    console.log('currentLocation',this.state.currentLocation)
     return(
       <div className="SuggestALocation">
         <UserMenu />
@@ -39,18 +97,19 @@ class SuggestALocation extends Component {
                 </div>
                 <div className="row">
                   <div className="input-field col s12 m9">
-                    <input id="location_address" type="text" className="validate" />
+                    <input placeholder="Enter address of press Locate button" id="location_address" type="text" className="validate" />
                     <label htmlFor="location_address">Location Address</label>
                   </div>
                   <div className="col s12 m3">
-                    <a className="waves-effect waves-light btn-large"><i className="material-icons left">cloud</i>Locate</a>
+                    <a className="waves-effect waves-light btn-large" onClick={this.reverseGeocoding.bind(this)}><i className="material-icons left">cloud</i>Locate</a>
                   </div>
                 </div>
                 <form>
                   <div className="file-field input-field">
                     <div className="btn">
                       <span>Photo</span>
-                      <input type="file" accept="image/*" capture="camera" />
+                      {/* <input id="fileButton" name="fileButton" ref="fileButton" type="file" accept="image/*" capture="camera" onChange={this.testingOnChange.bind(this)} /> */}
+                      <input id="fileButton" name="fileButton" ref={(input) => { this.fileButton = input; }} type="file" accept="image/*" capture="camera" onChange={this.testingOnChange.bind(this)} />
                     </div>
                     <div className="file-path-wrapper">
                       <input className="file-path validate" type="text" />
@@ -61,8 +120,12 @@ class SuggestALocation extends Component {
                 <div className="row">
                   <div className="input-field col s12">
                     <textarea id="reason" className="materialize-textarea"></textarea>
-                    <label htmlFor="reason">Textarea</label>
+                    <label htmlFor="reason">Reason for submission</label>
                   </div>
+                </div>
+
+                <div className="row">
+                  <a className="waves-effect waves-light btn-large" onClick={this.submitLocation.bind(this)}><i className="material-icons left">cloud</i>Submit</a>
                 </div>
 
               </div>

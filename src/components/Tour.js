@@ -5,6 +5,7 @@ import {Directions, Map, MapAndDirections} from './GoogleMapsApi';
 import UserMenu from './UserMenu'
 import LocationDetails from './LocationDetails';
 
+let google;
 //Get current location
 const geolocation = (
   canUseDOM && navigator.geolocation ?

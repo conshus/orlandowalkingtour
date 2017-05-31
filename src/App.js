@@ -1,3 +1,4 @@
+/* global google */ //for google is not defined error: used in examples here https://tomchentw.github.io/react-google-maps/
 import React, { Component } from 'react';
 import Home from './components/Home';
 import Tours from './components/Tours';
