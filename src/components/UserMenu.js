@@ -11,7 +11,8 @@ class UserMenu extends Component {
   constructor(){
     super();
     this.state = {
-      user:{}
+      user:{},
+      isAdmin: false
     }
   }
   componentDidMount(){
@@ -23,6 +24,20 @@ class UserMenu extends Component {
         this.setState({
           user: user
         })
+
+        base.fetch('admins',{
+          context: this,
+          asArray: true,
+        }).then(admins => {
+          console.log(admins)
+          console.log(admins.indexOf(user.uid))
+          if (admins.indexOf(user.uid)!==-1){
+            this.setState({
+              isAdmin: true
+            })
+          }
+        })
+
       }
     })
   }
@@ -33,6 +48,14 @@ class UserMenu extends Component {
         <li><Link to={`/user/${this.state.user.uid}/create`}>Create a Tour</Link></li>
         <li><Link to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link></li>
         <li><Link to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest A Location</Link></li>
+      </span>
+    )
+  }
+
+  adminOptions(){
+    return(
+      <span>
+        <li><Link to={`/user/${this.state.user.uid}/admin`}>Admin</Link></li>
       </span>
     )
   }
@@ -47,6 +70,7 @@ class UserMenu extends Component {
               <ul className="right hide-on-med-and-down">
                 <li><Link to="/">Home</Link></li>
                 {this.state.user.uid && this.loggedInUserOptions()}
+                {this.state.isAdmin && this.adminOptions()}
                 {/* <li><Link to="/create">Create a Tour</Link></li>
                 <li><Link to="/tours">View Saved Tours</Link></li>
                 <li><Link to="/suggest">Suggest A Location</Link></li> */}
@@ -54,6 +78,7 @@ class UserMenu extends Component {
               <ul className="side-nav" id="mobile-demo">
                 <li><Link to="/">Home</Link></li>
                 {this.state.user.uid && this.loggedInUserOptions()}
+                {this.state.isAdmin && this.adminOptions()}
                 {/* <li><Link to="/create">Create a Tour</Link></li>
                 <li><Link to="/tours">View Saved Tours</Link></li>
                 <li><Link to="/suggest">Suggest A Location</Link></li> */}

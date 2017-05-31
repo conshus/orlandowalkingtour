@@ -7,6 +7,7 @@ class Home extends Component {
     super();
     this.state = {
       user: {},
+      isAdmin: false
     }
   }
 
@@ -33,6 +34,21 @@ class Home extends Component {
       //   this.setState({
       //     user: {}
       //   })
+
+        base.fetch('admins',{
+          context: this,
+          asArray: true,
+        }).then(admins => {
+          console.log(admins)
+          console.log(admins.indexOf(user.uid))
+          if (admins.indexOf(user.uid)!==-1){
+            this.setState({
+              isAdmin: true
+            })
+          }
+        })
+
+
        }
     });
 
@@ -88,7 +104,8 @@ class Home extends Component {
   logout () {
     base.unauth()
     this.setState({
-      user: {}
+      user: {},
+      isAdmin: false
     })
   }
 
@@ -124,6 +141,16 @@ class Home extends Component {
     }
   }
 
+  adminMenu (){
+    if (this.state.isAdmin){
+      return (
+        <div>
+          <Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link>
+        </div>
+      )
+    }
+  }
+
 
   render() {
     return (
@@ -132,6 +159,7 @@ class Home extends Component {
           <h1>Home works!</h1>
           <Link className="waves-effect waves-light btn" to="/tours">Take a Tour</Link>
           {this.loggedInUserMenu()}
+          {this.adminMenu()}
           {this.loginOrLogoutButtons()}
         </div>
       </div>

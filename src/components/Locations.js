@@ -89,6 +89,7 @@ class Locations extends Component {
   constructor (){
     super();
     this.state = {
+      user: {},
       tourLocations:[],
       initialSave: false,
       tourId:'',
