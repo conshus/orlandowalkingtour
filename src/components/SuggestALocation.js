@@ -62,8 +62,6 @@ class SuggestALocation extends Component {
 
   submitLocation(){
     console.log('submit location');
-    //var fileButton = document.getElementById('fileButton');
-    //Get file
     console.log('file',this.fileButton.files[0])
     var file = this.fileButton.files[0]
     //Create a storage ref
