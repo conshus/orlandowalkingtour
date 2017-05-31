@@ -306,7 +306,7 @@ getDistance(location){
           {this.displaySelectedLocations()}
         </div>
 
-        <ul id="moreInfoSlideOut" className="side-nav">
+        {/* <ul id="moreInfoSlideOut" className="side-nav">
           <li><div className="userView">
             <div className="background">
               <img src="images/office.jpg" />
@@ -320,7 +320,7 @@ getDistance(location){
           <li><div className="divider"></div></li>
           <li><a className="subheader">Subheader</a></li>
           <li><a className="waves-effect" href="#!">Third Link With Waves</a></li>
-        </ul>
+        </ul> */}
 
 
         {/* Modal */}

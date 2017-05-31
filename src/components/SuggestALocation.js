@@ -135,20 +135,26 @@ class SuggestALocation extends Component {
   }
 
   submitLocation(){
-    console.log('submit location');
-    base.push(`submissions/`,{
-      data: {
-        address: this.location_address.value,
-        name: this.location_name.value,
-        description: this.reason.value,
-        location: {latitude: this.state.currentLocation.lat, longitude: this.state.currentLocation.lng},
-        type: 'Building',
-        images: {'0': this.state.imgsrc},
-        user: this.state.user.displayName,
-        userId: this.state.user.uid,
-        submitted: base.database.ServerValue.TIMESTAMP
-      }
-    }).then(() => this.setState({locationSubmitted: true}))
+    console.log("searching: ", this.state.imgsrc.search('image_placeholder'))
+    if (this.location_address.value !== '' && this.location_name.value !== '' && this.reason.value !== '' && this.state.imgsrc.search('image_placeholder') === -1){
+      console.log('submit location');
+      base.push(`submissions/`,{
+        data: {
+          address: this.location_address.value,
+          name: this.location_name.value,
+          description: this.reason.value,
+          location: {latitude: this.state.currentLocation.lat, longitude: this.state.currentLocation.lng},
+          type: 'Building',
+          images: {'0': this.state.imgsrc},
+          user: this.state.user.displayName,
+          userId: this.state.user.uid,
+          submitted: base.database.ServerValue.TIMESTAMP
+        }
+      }).then(() => this.setState({locationSubmitted: true}))
+    } else {
+      console.log('form not filled out completely')
+
+    }
   }
 
 
@@ -158,13 +164,13 @@ class SuggestALocation extends Component {
         <div className="card-content">
           <div className="row">
             <div className="input-field col s12">
-              <input id="location_name" type="text" className="validate" ref={(input) => { this.location_name = input; }} />
+              <input id="location_name" type="text" className="validate" ref={(input) => { this.location_name = input; }} required />
               <label htmlFor="location_name">Location Name</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12 m9">
-              <input placeholder="Enter address or press Locate button" id="location_address" type="text" className="validate" ref={(input) => { this.location_address = input; }} />
+              <input placeholder="Enter address or press Locate button" id="location_address" type="text" className="validate" ref={(input) => { this.location_address = input; }} required />
               <label htmlFor="location_address">Location Address</label>
             </div>
             <div className="col s12 m3">
@@ -182,7 +188,7 @@ class SuggestALocation extends Component {
           </form>
           <div className="row">
             <div className="input-field col s12">
-              <textarea id="reason" name="reason" ref={(input) => { this.reason = input; }} className="materialize-textarea"></textarea>
+              <textarea id="reason" name="reason" ref={(input) => { this.reason = input; }} className="materialize-textarea" required></textarea>
               <label htmlFor="reason">Reason for submission</label>
             </div>
           </div>
