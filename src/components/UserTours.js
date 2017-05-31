@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import base from '../rebase';
-window.base = base;
 import materializecss from 'materialize-css';
 import $ from 'jquery';
 import { Link } from 'react-router-dom';

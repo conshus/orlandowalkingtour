@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import base from '../rebase';
-window.base = base; //Use base from console
 
 class Home extends Component {
   constructor (){

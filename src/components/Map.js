@@ -3,7 +3,6 @@ import canUseDOM from "can-use-dom";
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Marker, Circle, InfoWindow, DirectionsRenderer, InfoBox} from 'react-google-maps';
 import base from '../rebase';
-window.base = base; //Use base from console
 import Distance from './Distance'
 
 const geolocation = (

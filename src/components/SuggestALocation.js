@@ -4,7 +4,8 @@ import UserMenu from './UserMenu';
 import canUseDOM from "can-use-dom";
 import base from '../rebase';
 import image_placeholder from "../../public/images/image_placeholder.png";
-window.base = base;
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 //Get current location
@@ -26,7 +27,9 @@ class SuggestALocation extends Component {
       currentLocation: {},
       imgsrc: image_placeholder,
       addPhotoButtonText: 'Add Photo',
-      locateButtonText: 'Locate'
+      locateButtonText: 'Locate',
+      locationSubmitted: false,
+      thankYouGiphy: null
     }
   }
   componentDidMount(){
@@ -133,73 +136,88 @@ class SuggestALocation extends Component {
 
   submitLocation(){
     console.log('submit location');
+    base.push(`submissions/`,{
+      data: {
+        address: this.location_address.value,
+        name: this.location_name.value,
+        description: this.reason.value,
+        location: {latitude: this.state.currentLocation.lat, longitude: this.state.currentLocation.lng},
+        type: 'Building',
+        images: {'0': this.state.imgsrc},
+        user: this.state.user.displayName,
+        userId: this.state.user.uid,
+        submitted: base.database.ServerValue.TIMESTAMP
+      }
+    }).then(() => this.setState({locationSubmitted: true}))
+  }
+
+
+  displaySubmissionForm(){
+    return(
+      <div className="card">
+        <div className="card-content">
+          <div className="row">
+            <div className="input-field col s12">
+              <input id="location_name" type="text" className="validate" ref={(input) => { this.location_name = input; }} />
+              <label htmlFor="location_name">Location Name</label>
+            </div>
+          </div>
+          <div className="row">
+            <div className="input-field col s12 m9">
+              <input placeholder="Enter address or press Locate button" id="location_address" type="text" className="validate" ref={(input) => { this.location_address = input; }} />
+              <label htmlFor="location_address">Location Address</label>
+            </div>
+            <div className="col s12 m3">
+              <a className="waves-effect waves-light btn-large" onClick={this.reverseGeocoding.bind(this)}>{this.state.locateButtonText}</a>
+            </div>
+          </div>
+          <form>
+            <div className="file-field input-field">
+              <div className="btn">
+                <span>{this.state.addPhotoButtonText}</span>
+                <input id="fileButton" name="fileButton" ref={(input) => { this.fileButton = input; }} type="file" accept="image/*" capture="camera" onChange={this.uploadImage.bind(this)} />
+              </div>
+                <img className="responsive-img" src={this.state.imgsrc} />
+            </div>
+          </form>
+          <div className="row">
+            <div className="input-field col s12">
+              <textarea id="reason" name="reason" ref={(input) => { this.reason = input; }} className="materialize-textarea"></textarea>
+              <label htmlFor="reason">Reason for submission</label>
+            </div>
+          </div>
+          <div className="row">
+            <a className="waves-effect waves-light btn-large" onClick={this.submitLocation.bind(this)}><i className="material-icons left">cloud</i>Submit</a>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  displayThankYou(){
+    if(!this.state.thankYouGiphy){
+    axios.get('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=thank+you')
+    .then(response => this.setState({thankYouGiphy: response.data.data.image_url}))
+    }
+//    .then(response => console.log(response.data.data.image_url))
+    return (
+      <div>
+        <h1>Location Submitted</h1>
+        {this.state.thankYouGiphy ? <img className="responsive-img" src={this.state.thankYouGiphy}/> : null}
+        <br/><Link to="/" className="waves-effect waves-light btn-large">Back to Home</Link>
+      </div>
+
+    )
   }
   render(){
-    console.log('currentLocation',this.state.currentLocation)
+    //console.log('currentLocation',this.state.currentLocation)
     return(
       <div className="SuggestALocation">
         <UserMenu />
         <div className="row">
           <div className="col s12 m2"></div>
           <div className="col s12 m8">
-
-
-            <div className="card">
-              {/* <div className="card-image">
-                { this.state.imgsrc ?
-                  <img className="activator" src={this.state.imgsrc} />
-                  : null }
-              </div> */}
-              <div className="card-content">
-                <div className="row">
-                  <div className="input-field col s12">
-                    <input id="location_name" type="text" className="validate" />
-                    <label htmlFor="location_name">Location Name</label>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="input-field col s12 m9">
-                    <input placeholder="Enter address or press Locate button" id="location_address" type="text" className="validate" />
-                    <label htmlFor="location_address">Location Address</label>
-                  </div>
-                  <div className="col s12 m3">
-                    <a className="waves-effect waves-light btn-large" onClick={this.reverseGeocoding.bind(this)}>{this.state.locateButtonText}</a>
-                  </div>
-                </div>
-                <form>
-                  <div className="file-field input-field">
-                    <div className="btn">
-                      <span>{this.state.addPhotoButtonText}</span>
-                      {/* <input id="fileButton" name="fileButton" ref="fileButton" type="file" accept="image/*" capture="camera" onChange={this.testingOnChange.bind(this)} /> */}
-                      <input id="fileButton" name="fileButton" ref={(input) => { this.fileButton = input; }} type="file" accept="image/*" capture="camera" onChange={this.uploadImage.bind(this)} />
-                    </div>
-                      <img className="responsive-img" src={this.state.imgsrc} />
-
-                    {/* <div className="file-path-wrapper">
-                      <input className="file-path validate" type="text" />
-                    </div> */}
-                  </div>
-                </form>
-
-                <div className="row">
-                  <div className="input-field col s12">
-                    <textarea id="reason" className="materialize-textarea"></textarea>
-                    <label htmlFor="reason">Reason for submission</label>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <a className="waves-effect waves-light btn-large" onClick={this.submitLocation.bind(this)}><i className="material-icons left">cloud</i>Submit</a>
-                </div>
-
-              </div>
-              <div className="card-reveal">
-                <span className="card-title grey-text text-darken-4">Card Title<i className="material-icons right">close</i></span>
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-              </div>
-            </div>
-
-
+            {this.state.locationSubmitted ? this.displayThankYou() : this.displaySubmissionForm()}
           </div>
           <div className="col s12 m2"></div>
         </div>

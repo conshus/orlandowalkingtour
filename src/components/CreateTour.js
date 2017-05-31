@@ -3,7 +3,6 @@ import UserMenu from './UserMenu';
 import Map from './Map';
 import Locations from './Locations'
 import base from '../rebase';
-window.base = base; //Use base from console
 import Distance from './Distance'
 
 class CreateTour extends Component {

@@ -4,7 +4,6 @@ import materializecss from 'materialize-css';
 var $ = window.jQuery = require('jquery');
 window.Vel = require('materialize-css/js/velocity.min'); //needed this to make the sideNav open. found solution here: https://github.com/Dogfalo/materialize/issues/1229#issuecomment-242328892
 import base from '../rebase';
-window.base = base; //Use base from console
 import Distance from './Distance';
 import LocationDetails from './LocationDetails';
 
