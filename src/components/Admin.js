@@ -4,6 +4,7 @@ import UserMenu from './UserMenu';
 import LocationDetails from './LocationDetails';
 import materializecss from 'materialize-css';
 var $ = window.jQuery = require('jquery');
+import { Link } from 'react-router-dom';
 
 class Admin extends Component {
   constructor (props){
@@ -40,7 +41,8 @@ class Admin extends Component {
     base.syncState(`/historic-locations/orlando`,{
       context: this,
       state: 'allLocations',
-      asArray: true
+      asArray: true,
+      keepKeys: true
     })
 
     base.syncState(`tours`, {
@@ -61,6 +63,19 @@ class Admin extends Component {
     return(
       <div id="submittedLocations" className="col s12">
         <h1> submitted locations </h1>
+
+        {this.state.submissions.map((submittedlocation, index) => {
+          console.log(submittedlocation)
+          return(
+            <div key={`submittedlocation-${index}`}>
+              <h1>Submitted Location</h1>
+              <h6>{submittedlocation.name}</h6>
+              <h6>{submittedlocation.key}</h6>
+            </div>
+
+          )
+        })}
+
       </div>
     )
   }
@@ -68,6 +83,21 @@ class Admin extends Component {
     return(
       <div id="allLocations" className="col s12">
         <h1> all locations </h1>
+
+        {this.state.allLocations.map((location, index) => {
+          console.log(location)
+          return(
+            <div key={`location-${index}`}>
+              <h1>Location</h1>
+              <h6>{location.name}</h6>
+              <h6>{location.key}</h6>
+            </div>
+
+          )
+        })}
+
+
+
       </div>
     )
   }
@@ -75,6 +105,18 @@ class Admin extends Component {
     return(
       <div id="tours" className="col s12">
         <h1> all tours </h1>
+        {this.state.tours.map((tour, index) => {
+          console.log(tour)
+          console.log(tour.sites[0])
+
+          return(
+            <div key={`tour-${index}`}>
+              <h1><Link to={`/tour/${tour.key}`} className="waves-effect waves-light btn">{tour.tourName}</Link></h1>
+            </div>
+
+          )
+        })}
+
       </div>
     )
   }
@@ -82,6 +124,21 @@ class Admin extends Component {
     return(
       <div id="users" className="col s12">
         <h1> all users </h1>
+
+        {this.state.users.map((user, index) => {
+          console.log(user)
+          return(
+            <div key={`user-${index}`}>
+              <h1>User</h1>
+              <h6>{user.name}</h6>
+              <h6>{user.key}</h6>
+              <h6>{user.avatar}</h6>
+            </div>
+
+          )
+        })}
+
+
       </div>
     )
   }

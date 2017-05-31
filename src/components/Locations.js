@@ -142,7 +142,7 @@ class Locations extends Component {
           tourId: results.key,
           disableSave: true,
         })
-        //base.post(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
+        base.update(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
         base.post(`/users/${this.state.user.uid}/tours/${results.key}/`, {data: {created: base.database.ServerValue.TIMESTAMP}})
         //console.log(this.state)
       })
@@ -150,7 +150,7 @@ class Locations extends Component {
 //)
     } else {
       console.log('already in Firebase', this.state.tourId)
-      base.post(`/tours/${this.state.tourId}/`,
+      base.update(`/tours/${this.state.tourId}/`,
       { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
       //.then(results => {
         //console.log(results.key)
