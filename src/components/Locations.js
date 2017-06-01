@@ -197,7 +197,7 @@ class Locations extends Component {
 getDistance(location){
   //console.log('getDistance', location)
   let shortenedLatLng = {lat: location.location.latitude, lng: location.location.longitude}
-  return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
+  // return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
 }
 
   toggleModal(location){

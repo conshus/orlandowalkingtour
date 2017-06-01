@@ -102,3 +102,12 @@
   height: 35vh;
   overflow-y: auto;
 }
+
+.location-image-card {
+  overflow:hidden;
+  height: 30vh;
+}
+
+.card-title {
+  text-shadow: 2px 2px #000000;
+}

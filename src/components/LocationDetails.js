@@ -41,7 +41,7 @@ class LocationDetails extends Component {
             <div className="col s12 m2 l3"></div>
             <div className="col s12 m8 l6">
               <div className="card">
-                <div className="card-image">
+                <div className="card-image location-image-card">
                   {this.props.locationInfo.images ?
                   <img src={this.props.locationInfo.images[0]} />
                   : null}

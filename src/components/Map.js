@@ -130,7 +130,8 @@ componentDidMount() {
         //defaultCenter={{ lat: -25.363882, lng: 131.044922 }}>
         center={this.state.center}>
         {this.state.center && (
-          <Marker position={this.state.center} text={'You are here'}>
+          <Marker position={this.state.center} text={'You are here'} icon={'https://chart.googleapis.com/chart?' +
+            'chst=d_map_pin_letter&chld=O|FF0000|000000'}>
             <Circle
           center={this.state.center}
           radius={this.state.radius}

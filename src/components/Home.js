@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import base from '../rebase';
+import materializecss from 'materialize-css';
+import $ from 'jquery';
 
 class Home extends Component {
   constructor (){
@@ -13,6 +15,8 @@ class Home extends Component {
 
 
   componentDidMount() {
+    $('.collapsible').collapsible();
+
     base.auth().onAuthStateChanged(user => {
       if (user) {
         console.log('User is signed in.', user);
@@ -116,11 +120,22 @@ class Home extends Component {
     } else {
       return (
         <div>
-          <h6>Login in to create & save tours</h6>
-          <button className="waves-effect waves-light btn" onClick={this.googlelogin.bind(this)}><i className="fa fa-google" aria-hidden="true"></i> Login</button>
-          <button className="waves-effect waves-light btn" onClick={this.twitterlogin.bind(this)}><i className="fa fa-twitter" aria-hidden="true"></i> Login</button>
-          <button className="waves-effect waves-light btn" onClick={this.facebooklogin.bind(this)}><i className="fa fa-facebook" aria-hidden="true"></i> Login</button>
-          <button className="waves-effect waves-light btn" onClick={this.githublogin.bind(this)}><i className="fa fa-github" aria-hidden="true"></i> Login</button>
+          <h6>to create & save tours:</h6>
+
+            <ul className="collapsible popout" data-collapsible="accordion">
+              <li>
+                <div className="collapsible-header"><i className="material-icons">filter_drama</i>Login</div>
+                <div className="collapsible-body">
+                  <span>
+                    <button className="waves-effect waves-light btn" onClick={this.googlelogin.bind(this)}><i className="fa fa-google" aria-hidden="true"></i></button>
+                    <button className="waves-effect waves-light btn" onClick={this.twitterlogin.bind(this)}><i className="fa fa-twitter" aria-hidden="true"></i></button>
+                    <button className="waves-effect waves-light btn" onClick={this.facebooklogin.bind(this)}><i className="fa fa-facebook" aria-hidden="true"></i></button>
+                    <button className="waves-effect waves-light btn" onClick={this.githublogin.bind(this)}><i className="fa fa-github" aria-hidden="true"></i></button>
+                  </span>
+                </div>
+              </li>
+            </ul>
+
         </div>
       )
     }

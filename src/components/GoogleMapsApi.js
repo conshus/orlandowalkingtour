@@ -88,3 +88,38 @@ export class MapAndDirections extends Component {
   }
 
 }
+
+
+export class Distance extends Component {
+
+  // componentDidMount(){
+  //   console.log('componentDidMount',this.props.start)
+  //   this.getDistance(this.props.destination, this.props.travelMode, this.props.mode);
+  // }
+  //
+  // shouldComponentUpdate(){
+  //   return false;
+  // }
+  //
+  // componentWillReceiveProps(nextProps){
+  //
+  //   console.log('nextProps:', nextProps)
+  //   this.getMapAndDirections(nextProps.start, nextProps.end, nextProps.mode);
+  //   console.log('this.props.start:',this.props.start)
+  // }
+  //
+  // render(){
+  //   return(
+  //     <div className="MapAndDirections row">
+  //       <div className="col s12 m6" style={{padding:0}}>
+  //         <div id="map" ref="map" />
+  //       </div>
+  //       <div className="col s12 m6" id="panelContainer" style={{padding:0}}>
+  //         <div id="directionsPanel" ref="directionsPanel" />
+  //       </div>
+  //     </div>
+  //   )
+  // }
+
+
+}
