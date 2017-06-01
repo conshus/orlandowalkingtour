@@ -109,7 +109,7 @@ class CreateTour extends Component {
               }
               //console.log(shortenedLatLng)
               //this.getDistance(shortenedLatLng)
-          //let locationDistance = <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='true' />
+          let locationDistance = <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='true' />
               // let distance={<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode={this.state.travelMode} showDistance='true' showDuration='true' />}
               //console.log({(<Distance destination={lat: location.location.latitude, lng: location.location.longitude} travelMode='walking' showDistance='true' showDuration='true' />)})
               //console.log(locationDistance)
@@ -145,7 +145,7 @@ class CreateTour extends Component {
         })
        }
     });
-    geolocation.getCurrentPosition(this.initialDistances.bind(this))
+    // geolocation.getCurrentPosition(this.initialDistances.bind(this))
 
   }
 

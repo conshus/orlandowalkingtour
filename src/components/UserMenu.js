@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import materializecss from 'materialize-css';
 //import $ from 'jquery';
 var $ = window.jQuery = require('jquery');
-window.Vel = require('materialize-css/js/velocity.min'); //needed this to make the sideNav open. found solution here: https://github.com/Dogfalo/materialize/issues/1229#issuecomment-242328892
+//window.Vel = require('materialize-css/js/velocity.min'); //needed this to make the sideNav open. found solution here: https://github.com/Dogfalo/materialize/issues/1229#issuecomment-242328892
 import base from '../rebase';
 
 
@@ -65,7 +65,7 @@ class UserMenu extends Component {
         <div className="navbar-fixed">
           <nav>
             <div className="nav-wrapper">
-              <a href="#!" className="brand-logo">Logo</a>
+              <Link to="/" className="brand-logo">OWT</Link>
               <a href="#" data-activates="mobile-demo" className="button-collapse"><i className="material-icons">menu</i></a>
               <ul className="right hide-on-med-and-down">
                 <li><Link to="/">Home</Link></li>

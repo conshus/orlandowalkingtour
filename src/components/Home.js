@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import base from '../rebase';
-import materializecss from 'materialize-css';
-import $ from 'jquery';
+// import materializecss from 'materialize-css';
+// var $ = window.jQuery = require('jquery');
+require('materialize-css/dist/css/materialize.css');
+window.jQuery = require('jquery');
+window.$ = require('jquery');
+require('materialize-css/dist/js/materialize.js');
+require('materialize-css/js/init.js');
 
 class Home extends Component {
   constructor (){
@@ -13,9 +18,22 @@ class Home extends Component {
     }
   }
 
+componentWillUpdate(){
+  window.$ = window.jQuery;
+  window.$('.collapsible').collapsible();
+  console.log('componentWillUpdate')
 
+}
+
+componentWillReceiveProps(){
+  window.$ = window.jQuery;
+  window.$('.collapsible').collapsible();
+  console.log('componentWillReceiveProps')
+
+}
   componentDidMount() {
-    $('.collapsible').collapsible();
+    window.$ = window.jQuery;
+    window.$('.collapsible').collapsible();
 
     base.auth().onAuthStateChanged(user => {
       if (user) {
@@ -111,9 +129,11 @@ class Home extends Component {
       user: {},
       isAdmin: false
     })
+    this.forceUpdate();
   }
 
   loginOrLogoutButtons (){
+
     if (this.state.user.uid){
       return <button className="waves-effect waves-light btn"
         onClick={this.logout.bind(this)}>Logout</button>
@@ -144,14 +164,12 @@ class Home extends Component {
   loggedInUserMenu (){
     if (this.state.user.uid){
       return (
-        <div>
-          <h6>user menu here</h6>
-          <img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" />
-          <br/>{this.state.user.displayName}
-          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link>
-          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link>
-          <br/><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link>
-        </div>
+        <span>
+            <li className="collection-header"><img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" /><h4>{this.state.user.displayName}</h4></li>
+            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link></div></li>
+            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link></div></li>
+            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link></div></li>
+        </span>
       )
     }
   }
@@ -159,22 +177,31 @@ class Home extends Component {
   adminMenu (){
     if (this.state.isAdmin){
       return (
-        <div>
-          <Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link>
-        </div>
+        <span>
+          <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link></div></li>
+        </span>
       )
     }
   }
 
+  reloadJquery(){
+    //window.$ = window.jQuery;
+    window.$('.collapsible').collapsible();
+    console.log('reloadJquery')
+  }
 
   render() {
+    this.reloadJquery()
     return (
       <div className="Home wholeScreen flex hcenter vcenter">
         <div>
-          <h1>Home works!</h1>
+          <h1>get OWT</h1>
+          <h6>Orlando Walking Tours</h6>
           <Link className="waves-effect waves-light btn" to="/tours">Take a Tour</Link>
-          {this.loggedInUserMenu()}
-          {this.adminMenu()}
+          <ul className="collection with-header">
+            {this.loggedInUserMenu()}
+            {this.adminMenu()}
+          </ul>
           {this.loginOrLogoutButtons()}
         </div>
       </div>

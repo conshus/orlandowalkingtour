@@ -28,7 +28,9 @@ class Tour extends Component {
       travelMode: 'WALKING',
       modal: false,
       tourLeg:{},
-      startNewLeg: true
+      startNewLeg: true,
+      initialSiteLoad: false,
+      initialSiteInfo: {}
     }
   }
   componentDidMount(){
@@ -66,17 +68,17 @@ class Tour extends Component {
                 latlng: {lat: siteInfo.location.latitude, lng: siteInfo.location.longitude},
                 locationId: site
               }
-              console.log('siteInfoWithLatLng', siteInfoWithLatLng)
+              // console.log('siteInfoWithLatLng', siteInfoWithLatLng)
               newLocations = this.state.locations.concat(siteInfoWithLatLng)
               // console.log('siteInfo:',siteInfo)
-              console.log('newLocations:', newLocations)
+              // console.log('newLocations:', newLocations)
               this.setState({
                 locations: newLocations,
                 destination: this.state.locations[0]
               })
             }
           })
-          console.log('site:',site);
+          // console.log('site:',site);
         })
       }
     });
@@ -130,17 +132,43 @@ class Tour extends Component {
     return (
       <div className="tourInfo">
         <UserMenu />
-        <h1>{this.state.tour.tourName}</h1>
+        {/* <h1>{this.state.tour.tourName}</h1>
         <h6>
           by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
           {this.state.tour.creator}
-        </h6>
-        {this.state.origin ?
-        <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>
-          <i className="material-icons" aria-hidden="true">directions_walk</i> Start Tour
-        </button>
-        : <div><i className="fa fa-spinner fa-spin fa-3x fa-fw"></i><span className="sr-only">Getting Current Location</span><b>Getting Current Location</b></div>}
-      </div>
+        </h6> */}
+
+        <div className="row">
+          <div className="col s12 m2 l3"></div>
+          <div className="col s12 m8 l6">
+            <div className="card">
+              <div className="card-image tour-image-card">
+                {console.log("this.state.locations[0].images",this.state.initialSiteInfo)}
+                { this.state.destination ? <img src={this.state.destination.images[0]}/> : null}
+                <span className="card-title location-details">{this.state.tour.tourName}</span>
+              </div>
+              <div className="card-content tourContent">
+                <p>{this.state.tour.tourDescription}</p>
+              </div>
+              <div className="card-action">
+                <div>
+                  by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
+                  {this.state.tour.creator}
+                </div>
+                {this.state.origin ?
+                <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>
+                  <i className="material-icons" aria-hidden="true">directions_walk</i> Start Tour
+                </button>
+                : <div><i className="fa fa-spinner fa-spin fa-3x fa-fw"></i><span className="sr-only">Getting Current Location</span><b>Getting Current Location</b></div>}
+              </div>
+              </div>
+            </div>
+          </div>
+          <div className="col s12 m2 l3"></div>
+        </div>
+
+
+
     )
   }
 
@@ -203,11 +231,12 @@ class Tour extends Component {
   }
 
   render() {
-    console.log('this.props.match.params:',this.props.match.params)
-    console.log('this.state.tour:',this.state.tour)
-    console.log('this.state.origin:',this.state.origin)
-    console.log('this.state.locations:',this.state.locations)
-    console.log('this.state:',this.state)
+    // console.log('this.props.match.params:',this.props.match.params)
+    // console.log('this.state.tour:',this.state.tour)
+    // console.log('this.state.origin:',this.state.origin)
+    // console.log('this.state.locations:',this.state.locations)
+    console.log('this.state.destination:',this.state.destination)
+     console.log('this.state:',this.state)
     return (
       <div className="Tour">
         {!this.state.startTour && this.tourInfo()}

@@ -32,8 +32,21 @@ class Tours extends Component {
         {this.state.tours.map((tour, index) => {
           console.log(tour)
           return(
-            <div key={`tour-${index}`}>
-              <h1><Link to={`/tour/${tour.key}`} className="waves-effect waves-light btn">{tour.tourName}</Link></h1>
+            <div key={`tour-${index}`} className="col s12 m4 l3">
+
+
+              <div className="card">
+                <div className="card-image waves-effect waves-block waves-light">
+                  {/* <img className="activator" src="images/office.jpg" /> */}
+                </div>
+                <div className="card-content">
+                  <span className="card-title activator grey-text text-darken-4">{tour.tourName}</span>
+                  <p>Created by</p>
+                  <p><img className="responsive-img circle userAvatarSmall" src={tour.creatorPhoto} alt="user pic" />{tour.creator}</p>
+                  <Link to={`/tour/${tour.key}`} className="waves-effect waves-light btn">Select this Tour</Link>
+                </div>
+              </div>
+
             </div>
 
           )
@@ -45,9 +58,10 @@ class Tours extends Component {
     return (
       <div className="Tours">
         <UserMenu />
-        <h1>Tours works!</h1>
-        {this.listTours()}
-
+        <div className="row">
+          {this.listTours()}
+        </div>
+{/*
 
         <ul className="collapsible" data-collapsible="accordion">
           <li>
@@ -62,7 +76,7 @@ class Tours extends Component {
             <div className="collapsible-header"><i className="material-icons">whatshot</i>Third</div>
             <div className="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
           </li>
-        </ul>
+        </ul> */}
 
 
 

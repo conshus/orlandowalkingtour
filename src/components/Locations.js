@@ -128,12 +128,13 @@ class Locations extends Component {
 
   saveTour(){
     let tourName = this.tourName.value;
+    let tourDescription = this.tourDescription.value;
     console.log(tourName)
     let tourLocationIdsOnly = this.state.tourLocations.map((location,index)=>location.key);
     console.log(tourLocationIdsOnly)
     if (this.state.tourId === '' && this.state.initialSave === false){
       base.push(`/tours/`,
-      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP, creatorPhoto: this.state.user.photoURL }})
+      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, tourDescription: tourDescription, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP, creatorPhoto: this.state.user.photoURL }})
       .then(results => {
         console.log(results.key)
         console.log(this.state.initialSave)
@@ -197,7 +198,7 @@ class Locations extends Component {
 getDistance(location){
   //console.log('getDistance', location)
   let shortenedLatLng = {lat: location.location.latitude, lng: location.location.longitude}
-  // return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
+   return <Distance destination={shortenedLatLng} travelMode='walking' showDistance='true' showDuration='false' />
 }
 
   toggleModal(location){
@@ -255,7 +256,13 @@ getDistance(location){
             <div className="col s6 valign-wrapper">
               <button className="waves-effect waves-light btn"
                 onClick={this.saveTour.bind(this)} disabled={this.state.disableSave ? 'disabled' : ''}>Save</button>
-              <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a>
+              {/* <a href="#" data-activates="moreInfoSlideOut" className="moreInfo"><i className="material-icons">menu</i></a> */}
+            </div>
+          </div>
+          <div className="row noBottom">
+            <div className="input-field col s12">
+              <input id="tourDescription" type="text" className="validate noBottom"  ref={(input) => { this.tourDescription = input; }} />
+              <label htmlFor="tourName">Enter a description for your tour</label>
             </div>
           </div>
           <ul className="collection">

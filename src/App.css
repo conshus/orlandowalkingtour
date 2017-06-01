@@ -55,6 +55,7 @@
 }
 #sidenav-overlay {
   z-index: 996 !important;
+  opacity: 0 !important;
 }
 
 #allLocations, #selectedLocations{
@@ -108,6 +109,32 @@
   height: 30vh;
 }
 
-.card-title {
+.card-title .location-details {
   text-shadow: 2px 2px #000000;
+}
+
+nav .brand-logo {
+  position: relative;
+  float: left;
+}
+
+.userAvatarSmall {
+  width:5vw;
+}
+.tourContent {
+  height: 15vh;
+  overflow-y:auto;
+}
+
+.tour-image-card {
+  overflow:hidden;
+  height: 50vh;
+}
+
+.MapAndDirections {
+  height: 75vh;
+}
+
+.waves-effect {
+  z-index:0 !important;
 }
