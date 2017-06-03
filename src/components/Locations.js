@@ -130,6 +130,9 @@ class Locations extends Component {
     let tourName = this.tourName.value;
     let tourDescription = this.tourDescription.value;
     console.log(tourName)
+
+console.log('this.state.tourLocations.length: ',this.state.tourLocations.length)
+if (tourName !== '' && tourDescription !== '' && this.state.tourLocations.length !== 0){
     let tourLocationIdsOnly = this.state.tourLocations.map((location,index)=>location.key);
     console.log(tourLocationIdsOnly)
     if (this.state.tourId === '' && this.state.initialSave === false){
@@ -162,6 +165,10 @@ class Locations extends Component {
         console.log(this.state)
       //})
     }
+
+} else {
+  console.log('error')
+}
 
   }
 
