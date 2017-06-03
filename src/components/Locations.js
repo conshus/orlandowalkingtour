@@ -95,7 +95,8 @@ class Locations extends Component {
       tourId:'',
       disableSave: false,
       modal: false,
-      moreInfoLocation:{}
+      moreInfoLocation:{},
+      displayError: false
     }
   }
 
@@ -131,47 +132,59 @@ class Locations extends Component {
     let tourDescription = this.tourDescription.value;
     console.log(tourName)
 
-console.log('this.state.tourLocations.length: ',this.state.tourLocations.length)
-if (tourName !== '' && tourDescription !== '' && this.state.tourLocations.length !== 0){
-    let tourLocationIdsOnly = this.state.tourLocations.map((location,index)=>location.key);
-    console.log(tourLocationIdsOnly)
-    if (this.state.tourId === '' && this.state.initialSave === false){
-      base.push(`/tours/`,
-      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, tourDescription: tourDescription, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP, creatorPhoto: this.state.user.photoURL }})
-      .then(results => {
-        console.log(results.key)
-        console.log(this.state.initialSave)
-        this.setState({
-          initialSave: true,
-          tourId: results.key,
-          disableSave: true,
-        })
-        base.update(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
-        base.post(`/users/${this.state.user.uid}/tours/${results.key}/`, {data: {created: base.database.ServerValue.TIMESTAMP}})
-        //console.log(this.state)
-      })
-      //.then()
-//)
-    } else {
-      console.log('already in Firebase', this.state.tourId)
-      base.update(`/tours/${this.state.tourId}/`,
-      { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
-      //.then(results => {
-        //console.log(results.key)
-        console.log(this.state.initialSave)
-        this.setState({
-          disableSave: true,
-        })
-        console.log(this.state)
-      //})
-    }
+    console.log('this.state.tourLocations.length: ',this.state.tourLocations.length)
+    if (tourName !== '' && tourDescription !== '' && this.state.tourLocations.length !== 0){
+        let tourLocationIdsOnly = this.state.tourLocations.map((location,index)=>location.key);
+        console.log(tourLocationIdsOnly)
+        if (this.state.tourId === '' && this.state.initialSave === false){
+          base.push(`/tours/`,
+          { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, tourDescription: tourDescription, sites: tourLocationIdsOnly, created: base.database.ServerValue.TIMESTAMP, creatorPhoto: this.state.user.photoURL }})
+          .then(results => {
+            console.log(results.key)
+            console.log(this.state.initialSave)
+            this.setState({
+              initialSave: true,
+              tourId: results.key,
+              disableSave: true,
+            })
+            base.update(`/users/${this.state.user.uid}/`, {data: {name: this.state.user.displayName, avatar: this.state.user.photoURL}})
+            base.post(`/users/${this.state.user.uid}/tours/${results.key}/`, {data: {created: base.database.ServerValue.TIMESTAMP}})
+            //console.log(this.state)
+          })
+          //.then()
+    //)
+        } else {
+          console.log('already in Firebase', this.state.tourId)
+          base.update(`/tours/${this.state.tourId}/`,
+          { data: {creator: this.state.user.displayName, creatorId: this.state.user.uid, tourName: tourName, sites: tourLocationIdsOnly}})
+          //.then(results => {
+            //console.log(results.key)
+            console.log(this.state.initialSave)
+            this.setState({
+              disableSave: true,
+            })
+            console.log(this.state)
+          //})
+        }
 
-} else {
-  console.log('error')
-}
+    } else {
+      console.log('error')
+      this.setState({displayError: true})
+    }
 
   }
 
+  displayError(){
+    return(
+      <span className="red-text">
+        Error
+        <br/> {this.tourName.value === '' ? 'Please Name your tour.' : null}
+        <br/> {this.tourDescription.value === '' ? 'Please add a Description.' : null}
+        <br/> {this.state.tourLocations.length === 0 ? 'Please add some Locations.' : null}
+        <br/> <a onClick={()=>{this.setState({displayError:false})}}>X close</a>
+      </span>
+    )
+  }
 
   toggleSelect(locationToggled,locationsToShow){
     console.log('location toggleSelect:',locationToggled, locationsToShow);
@@ -255,6 +268,11 @@ getDistance(location){
     return(
       <div>
         <div id="selectedLocations" className="col s12">
+          <div className="row">
+            <div className="col s12">
+              {this.state.displayError ? this.displayError() : null}
+            </div>
+          </div>
           <div className="row noBottom">
             <div className="input-field col s6">
               <input id="tourName" type="text" className="validate noBottom"  ref={(input) => { this.tourName = input; }} />

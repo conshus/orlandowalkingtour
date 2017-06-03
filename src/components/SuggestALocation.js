@@ -29,7 +29,9 @@ class SuggestALocation extends Component {
       addPhotoButtonText: 'Add Photo',
       locateButtonText: 'Locate',
       locationSubmitted: false,
-      thankYouGiphy: null
+      thankYouGiphy: null,
+      displayError: false
+
     }
   }
   componentDidMount(){
@@ -153,8 +155,22 @@ class SuggestALocation extends Component {
       }).then(() => this.setState({locationSubmitted: true}))
     } else {
       console.log('form not filled out completely')
+      this.setState({displayError: true})
 
     }
+  }
+
+  displayError(){
+    return(
+      <span className="red-text">
+        <br/>Error
+        <br/> {this.location_address.value === '' ? "Please fill in the location's address." : null}
+        <br/> {this.location_name.value === '' ? 'Please Name the location.' : null}
+        <br/> {this.reason.value === '' ? 'Please add your reason for submission.' : null}
+        <br/> {this.state.imgsrc.search('image_placeholder') !== -1 ? 'Please add a photo.' : null}
+        <br/> <a onClick={()=>{this.setState({displayError:false})}}>X close</a>
+      </span>
+    )
   }
 
 
@@ -194,6 +210,7 @@ class SuggestALocation extends Component {
           </div>
           <div className="row">
             <a className="waves-effect waves-light btn-large" onClick={this.submitLocation.bind(this)}><i className="material-icons left">cloud</i>Submit</a>
+            {this.state.displayError ? this.displayError() : null}
           </div>
         </div>
       </div>
