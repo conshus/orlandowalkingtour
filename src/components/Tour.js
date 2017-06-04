@@ -4,6 +4,7 @@ import base from '../rebase';
 import {Directions, Map, MapAndDirections} from './GoogleMapsApi';
 import UserMenu from './UserMenu'
 import LocationDetails from './LocationDetails';
+import { Link } from 'react-router-dom';
 
 //Get current location
 const geolocation = (
@@ -146,15 +147,17 @@ class Tour extends Component {
                 {console.log("this.state.locations[0].images",this.state.initialSiteInfo)}
                 { this.state.destination ? <img src={this.state.destination.images[0]}/> : null}
                 <span className="card-title location-details">{this.state.tour.tourName}</span>
+                <div>
+                  by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
+                  {this.state.tour.creator}
+                </div>
+
               </div>
               <div className="card-content tourContent">
                 <p>{this.state.tour.tourDescription}</p>
               </div>
               <div className="card-action">
-                <div>
-                  by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
-                  {this.state.tour.creator}
-                </div>
+                <Link className="waves-effect waves-light btn" to="/tours">Back to Tours</Link>
                 {this.state.origin ?
                 <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>
                   <i className="material-icons" aria-hidden="true">directions_walk</i> Start Tour

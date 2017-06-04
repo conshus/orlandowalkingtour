@@ -138,3 +138,36 @@ nav .brand-logo {
 .waves-effect {
   z-index:0 !important;
 }
+
+nav {
+  background-color: #1a2f5a !important;
+}
+.btn, .btn-large {
+  background-color: #9dcaeb !important;
+}
+.Home {
+  background-image: url(../public/images/church-street-history.jpg);
+  /*background-image: url(https://orlandoretro.files.wordpress.com/2013/03/church-street-2.jpg);*/
+  background-position: center center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+  background-color: #999;
+}
+.homeScreen {
+  /*color: white;*/
+  padding: 2vw;
+  background-color: rgba(26,47,90,0.6);
+}
+
+.collapsible-body {
+  background-color: white;
+}
+
+.owtLogo {
+  width:20vw;
+}
+
+.collection {
+  background-color: rgba(255,255,255,0.6);
+}

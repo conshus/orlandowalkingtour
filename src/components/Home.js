@@ -8,6 +8,7 @@ window.jQuery = require('jquery');
 window.$ = require('jquery');
 require('materialize-css/dist/js/materialize.js');
 require('materialize-css/js/init.js');
+import owt_logo from "../../public/images/OWT-logo.png";
 
 class Home extends Component {
   constructor (){
@@ -194,15 +195,16 @@ componentWillReceiveProps(){
     this.reloadJquery()
     return (
       <div className="Home wholeScreen flex hcenter vcenter">
-        <div>
-          <h1>get OWT</h1>
+        <div className="homeScreen">
+          {/* <h1>get OWT</h1> */}
+          <img src={owt_logo} className="responsive-img owtLogo" />
           <h6>Orlando Walking Tours</h6>
           <Link className="waves-effect waves-light btn" to="/tours">Take a Tour</Link>
           <ul className="collection with-header">
+            {this.loginOrLogoutButtons()}
             {this.loggedInUserMenu()}
             {this.adminMenu()}
           </ul>
-          {this.loginOrLogoutButtons()}
         </div>
       </div>
     )
