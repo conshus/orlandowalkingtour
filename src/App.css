@@ -211,3 +211,12 @@ nav {
 .btn:hover, .btn:hover {
   background-color: #1a2f5a;
 }
+[type="radio"]:not(:checked) + label, [type="radio"]:checked + label {
+  padding-left: 20px;
+}
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:after {
+  background-color: #9dcaeb;
+}
+[type="radio"]:checked + label:after, [type="radio"].with-gap:checked + label:before, [type="radio"].with-gap:checked + label:after {
+  border: 2px solid #9dcaeb;
+}
