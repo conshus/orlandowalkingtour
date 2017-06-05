@@ -102,13 +102,24 @@ class Admin extends Component {
         {this.state.submissions.map((submittedlocation, index) => {
           console.log('submitted location:',submittedlocation)
           return(
-            <div key={`submittedlocation-${index}`}>
-              <h2>{submittedlocation.name}</h2>
-              <a className="btn-large waves-effect waves-light" onClick={()=>{this.setState({moreInfoLocation: submittedlocation, modal: true})}}>
-                <i className="material-icons">search</i> Review
-              </a>
-              <a className="btn-large waves-effect waves-light red" onClick={this.deleteSubmission.bind(this,submittedlocation.key)}><i className="material-icons">delete</i>Delete</a>
-              <a className="btn-large waves-effect waves-light green" onClick={this.approveSubmission.bind(this,submittedlocation)}><i className="material-icons">check_circle</i>Approve</a>
+            <div key={`submittedlocation-${index}`} className="card horizontal">
+              <div className="card-image">
+                <img src={submittedlocation.images[0]} />
+              </div>
+              <div className="card-stacked">
+                <div className="card-content">
+                  <h4>{submittedlocation.name}</h4>
+                  <h6>by {submittedlocation.user}</h6>
+                </div>
+                <div className="card-action">
+                  <a className="btn waves-effect waves-light" onClick={()=>{this.setState({moreInfoLocation: submittedlocation, modal: true})}}>
+                    <i className="material-icons">search</i> Review
+                  </a>
+                  <a className="btn waves-effect waves-light red" onClick={this.deleteSubmission.bind(this,submittedlocation.key)}><i className="material-icons">delete</i>Delete</a>
+                  <a className="btn waves-effect waves-light green" onClick={this.approveSubmission.bind(this,submittedlocation)}><i className="material-icons">check_circle</i>Approve</a>
+
+                </div>
+              </div>
 
             </div>
 
@@ -184,7 +195,7 @@ class Admin extends Component {
           {this.state.users.map((user, index) => {
             console.log(user)
             return(
-              <div key={`user-${index}`} className="col s12 m4">
+              <div key={`user-${index}`} className="col s12 m3">
                 <div className="card">
                   <div className="card-image">
                     <img src={user.avatar} className="responsive-img userAvatar"/>

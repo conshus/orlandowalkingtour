@@ -143,7 +143,7 @@ nav {
   background-color: #1a2f5a !important;
 }
 .btn, .btn-large {
-  background-color: #9dcaeb !important;
+  background-color: #9dcaeb;
 }
 .Home {
   background-image: url(../public/images/church-street-history.jpg);
@@ -191,4 +191,23 @@ nav {
 .blackBackground {
   background-color: rgba(0, 0, 0, 0.4);
   width:100%;
+}
+.tabs .tab a:hover, .tabs .tab a.active {
+  color: #1a2f5a;
+}
+.tabs .tab a {
+  color: rgba(26, 47, 90, 0.7);
+}
+.tabs .indicator {
+  background-color: #9dcaeb;
+}
+.secondary-content {
+  color: #1a2f5a;
+}
+[type="checkbox"]:checked + label:before{
+  border-right: 2px solid #9dcaeb;
+  border-bottom: 2px solid #9dcaeb;
+}
+.btn:hover, .btn:hover {
+  background-color: #1a2f5a;
 }

@@ -45,7 +45,7 @@ class LocationDetails extends Component {
                   {this.props.locationInfo.images ?
                   <img src={this.props.locationInfo.images[0]} />
                   : null}
-                  <span className="card-title location-details">{this.props.locationInfo.name}</span>
+                  <span className="card-title location-details blackBackground">{this.props.locationInfo.name}</span>
                 </div>
                 <div className="card-content modalContent">
                   <p>{this.props.locationInfo.address}</p>

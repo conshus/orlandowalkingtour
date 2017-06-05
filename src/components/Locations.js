@@ -30,7 +30,7 @@ const SortableItem = SortableElement(({value, toggleSelect}) => {
           info_outline
         </i>
       </a> */}
-      <a onClick={toggleSelect.bind(this,value,'selected')} className="secondary-content">
+      <a onClick={toggleSelect.bind(this,value,'selected')} className="secondary-content red-text">
         <i className="material-icons">
           clear
         </i>
