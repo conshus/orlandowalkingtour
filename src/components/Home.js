@@ -137,15 +137,15 @@ componentWillReceiveProps(){
 
     if (this.state.user.uid){
       return <button className="waves-effect waves-light btn"
-        onClick={this.logout.bind(this)}>Logout</button>
+        onClick={this.logout.bind(this)}><img className="responsive-img circle logoutButtonUserAvatar" src={this.state.user.photoURL} alt="user pic" /> Logout</button>
     } else {
       return (
         <div>
-          <h6>to create & save tours:</h6>
+          <span className="white-text homeFont">to create & save tours:</span>
 
             <ul className="collapsible popout" data-collapsible="accordion">
               <li>
-                <div className="collapsible-header"><i className="material-icons">filter_drama</i>Login</div>
+                <div className="collapsible-header"><i className="material-icons">account_box</i>Login</div>
                 <div className="collapsible-body">
                   <span>
                     <button className="waves-effect waves-light btn" onClick={this.googlelogin.bind(this)}><i className="fa fa-google" aria-hidden="true"></i></button>
@@ -166,10 +166,13 @@ componentWillReceiveProps(){
     if (this.state.user.uid){
       return (
         <span>
-            <li className="collection-header"><img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" /><h4>{this.state.user.displayName}</h4></li>
-            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link></div></li>
+            {/* <li className="collection-header"><img className="responsive-img circle userAvatar" src={this.state.user.photoURL} alt="user pic" /><h4>{this.state.user.displayName}</h4></li> */}
+            {/* <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link></div></li>
             <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link></div></li>
-            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link></div></li>
+            <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link></div></li> */}
+            <br/><br/><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/create`}>Create New Tour</Link></div>
+            <br/><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/tours`}>View Saved Tours</Link></div>
+            <br/><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/suggestALocation`}>Suggest a Location</Link></div>
         </span>
       )
     }
@@ -179,7 +182,8 @@ componentWillReceiveProps(){
     if (this.state.isAdmin){
       return (
         <span>
-          <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link></div></li>
+          {/* <li className="collection-item"><div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link></div></li> */}
+          <div><Link className="waves-effect waves-light btn" to={`/user/${this.state.user.uid}/admin`}>Admin</Link></div>
         </span>
       )
     }
@@ -198,13 +202,13 @@ componentWillReceiveProps(){
         <div className="homeScreen">
           {/* <h1>get OWT</h1> */}
           <img src={owt_logo} className="responsive-img owtLogo" />
-          <h6>Orlando Walking Tours</h6>
+          <div className="white-text homeFont">Orlando Walking Tours</div>
           <Link className="waves-effect waves-light btn" to="/tours">Take a Tour</Link>
-          <ul className="collection with-header">
-            {this.loginOrLogoutButtons()}
+          {/* <ul className="collection with-header"> */}
             {this.loggedInUserMenu()}
-            {this.adminMenu()}
-          </ul>
+            <br/>{this.adminMenu()}
+            <br/>{this.loginOrLogoutButtons()}
+          {/* </ul> */}
         </div>
       </div>
     )

@@ -157,6 +157,10 @@ class Tour extends Component {
                 <p>{this.state.tour.tourDescription}</p>
               </div>
               <div className="card-action">
+                <div>
+                  by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
+                  {this.state.tour.creator}
+                </div>
                 <Link className="waves-effect waves-light btn" to="/tours">Back to Tours</Link>
                 {this.state.origin ?
                 <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>
