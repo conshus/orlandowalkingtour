@@ -146,21 +146,24 @@ class Tour extends Component {
               <div className="card-image tour-image-card">
                 {console.log("this.state.locations[0].images",this.state.initialSiteInfo)}
                 { this.state.destination ? <img src={this.state.destination.images[0]}/> : null}
-                <span className="card-title location-details">{this.state.tour.tourName}</span>
-                <div>
+                <span className="card-title location-details left-align blackBackground">
+                  {this.state.tour.tourName} <br/>by {this.state.tour.creator}
+                  <img className="responsive-img circle userAvatar tourCardInfo" src={this.state.tour.creatorPhoto} alt="user pic" />
+                </span>
+                {/* <div className="card-title">
                   by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
                   {this.state.tour.creator}
-                </div>
+                </div> */}
 
               </div>
               <div className="card-content tourContent">
-                <p>{this.state.tour.tourDescription}</p>
+                <h4>{this.state.tour.tourDescription}</h4>
               </div>
               <div className="card-action">
-                <div>
+                {/* <div>
                   by <img className="responsive-img circle userAvatar" src={this.state.tour.creatorPhoto} alt="user pic" />
                   {this.state.tour.creator}
-                </div>
+                </div> */}
                 <Link className="waves-effect waves-light btn" to="/tours">Back to Tours</Link>
                 {this.state.origin ?
                 <button className="waves-effect waves-light btn" onClick={()=>{this.setState({startTour: true})}}>

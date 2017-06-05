@@ -128,7 +128,7 @@ nav .brand-logo {
 
 .tour-image-card {
   overflow:hidden;
-  height: 50vh;
+  height: 40vh;
 }
 
 .MapAndDirections {
@@ -182,4 +182,13 @@ nav {
 
 .homeFont {
   font-size: 2rem;
+}
+
+.tourCardInfo {
+  width: 4rem !important;
+  border-radius: 50% !important;
+}
+.blackBackground {
+  background-color: rgba(0, 0, 0, 0.4);
+  width:100%;
 }
